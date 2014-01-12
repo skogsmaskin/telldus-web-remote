@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Bjørge Næss",
   "license": "MIT",
+  "bin": {
+    "telldus-web-remote": "./bin/telldus-web-remote"
+  },
   "dependencies": {
     "express": "~3.4.7",
     "browserify-middleware": "git://github.com/bjoerge/browserify-middleware#precompile",
