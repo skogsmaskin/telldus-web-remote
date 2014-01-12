@@ -1,0 +1,49 @@
+@import "libs/elements";
+@import "type";
+@import "libs/buttons";
+
+@baseLineHeight:       24px;
+@colorDark:            #444444;
+
+#container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-bottom: @baseLineHeight * 2;
+  clear: both;
+  overflow: hidden;
+  padding-top: @baseLineHeight * 2;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  max-width: 100%;
+  h1 {
+    text-align: center;
+    font-size: 52px;
+    color: darken(@colorDark, 10%);
+  }
+
+  @media screen and (max-width: 620px) {
+    padding: 10px;
+  }
+}
+
+.nav {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  height: @baseLineHeight * 2;
+  background-color: @colorDark;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  h3 {
+    padding-left: 10px;
+    color: #fff;
+    font-size: 18px;
+  }
+}
+

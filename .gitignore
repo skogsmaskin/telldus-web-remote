@@ -1,0 +1,11 @@
+.DS_Store
+*.seed
+*.log
+*.dat
+*.out
+*.pid
+*.gz
+build
+npm-debug.log
+node_modules
+public/css
