@@ -1,7 +1,21 @@
+var cluster = require('cluster');
+var numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  // Fork workers.
+  for (var i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', function(worker, code, signal) {
+    console.log('worker ' + worker.process.pid + ' died');
+  });
+  return;
+}
+
 var express = require('express');
 var http = require('http');
 var browserify = require('browserify-middleware');
-
 var path = require('path');
 var app = express();
 var lessMiddleware = require('less-middleware');
@@ -14,6 +28,7 @@ app.set('view engine', 'jade');
 
 //provide browserified versions of all the files in a app/client
 var env = app.get("env");
+
 app.use('/js', browserify('./client', {
   transform: ['reactify'],
   debug: env !== 'production',
