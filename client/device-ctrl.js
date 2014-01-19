@@ -84,6 +84,7 @@ module.exports = React.createClass({
   },
   componentWillUnmount: function() {
     this.hammer.off('drag', this.drag);
+    this.hammer.off('tap', this.tap);
   },
   render: function() {
     var controls = [];
