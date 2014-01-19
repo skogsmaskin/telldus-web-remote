@@ -51,15 +51,39 @@ module.exports = React.createClass({
       this.setState(device);
     }.bind(this))
   },
-  swipeLeft: function() {
-    console.log("Swipe left")
+
+  drag: function() {
+    // Dims the device on dragging according to the width of the element
+    console.log( event.gesture );
+    var g = event.gesture
+    var d = g.interimDirection;
+    
+    console.log( g.deltaX, window.outerWidth ); // or the width of the element
+
+    // on start drag (or hold) show the divider (set opacity)
+
+    if ( d == "left") {
+
+      console.log("left");
+
+    } else if( d == "right" ) {
+
+      console.log("right");
+
+    }
   },
+
+  tap: function() {
+    // turn the light on/off
+  },
+
   componentDidMount: function() {
     this.hammer = Hammer(this.getDOMNode())
-    this.hammer.on('swipeleft', this.swipeLeft);
+    this.hammer.on('drag', this.drag);
+    this.hammer.on('tap', this.tap );
   },
   componentWillUnmount: function() {
-    this.hammer.off('swipeleft', this.swipeLeft);
+    this.hammer.off('drag', this.drag);
   },
   render: function() {
     var controls = [];
@@ -77,6 +101,7 @@ module.exports = React.createClass({
         {this.state.name}
       </h3>
       <span className={badgeClasslist.join(" ")}> {name} </span>
+      <span className="divider"></span>
       <span className="percent">0%</span>
       {controls}
     </div>

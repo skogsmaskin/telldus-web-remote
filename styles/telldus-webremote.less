@@ -24,6 +24,17 @@ body {
         overflow: hidden;
         height: 100px;
         position: relative;
+        border: none;
+        outline: none;
+        span.divider {
+          height: 100%;
+          width: 50%;
+          background-color: #000;
+          position: absolute;
+          left: 0;
+          top: 0;
+          opacity: 0.5;
+        }
         &:nth-child(1n+1) {
           background-color: #42c401;
         }
@@ -49,6 +60,9 @@ body {
           height: 50px;
           width: 50px;
           border-radius: 50px;
+          &.on {
+            background-color: #fff;
+          }
         }
         h3 {
           line-height: 100px;
