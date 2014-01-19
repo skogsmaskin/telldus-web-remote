@@ -4,6 +4,8 @@ var React = require("react");
 
 var api = require("./api")
 
+var Hammer = require("hammerjs")
+
 var Dimmer = React.createClass({
   getInitialState: function() {
     return {adjustingLevel: 0};
@@ -48,6 +50,16 @@ module.exports = React.createClass({
     api.togglePower(deviceId, turnOn, function(err, device) {
       this.setState(device);
     }.bind(this))
+  },
+  swipeLeft: function() {
+    console.log("Swipe left")
+  },
+  componentDidMount: function() {
+    this.hammer = Hammer(this.getDOMNode())
+    this.hammer.on('swipeleft', this.swipeLeft);
+  },
+  componentWillUnmount: function() {
+    this.hammer.off('swipeleft', this.swipeLeft);
   },
   render: function() {
     var controls = [];
