@@ -53,7 +53,7 @@ module.exports = React.createClass({
     var controls = [];
     var isOn = this.state.status.name == 'ON' || this.state.status.name == 'DIM';
 
-    controls.push(<li><PowerButton isOn={isOn} onChange={this.onPowerToggle.bind(this, this.state.id)}/></li>);
+    controls.push(<PowerButton isOn={isOn} onChange={this.onPowerToggle.bind(this, this.state.id)}/>);
 
     if (this.state.methods.indexOf('DIM') > -1) {
       controls.push(<Dimmer level={this.state.status.level} state={this.state.status.name} onDim={this.dim.bind(this, this.state.id)}/>);
