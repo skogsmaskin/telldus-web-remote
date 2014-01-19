@@ -1,5 +1,38 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900);
 body {
+
+  background-color: #fe2002;
+
+  div.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 50px;
+    z-index: 1000;
+    background-color: rgba(0,0,0,.5);
+    line-height: 50px;
+    h3 {
+      margin: 0;
+      padding: 0;
+      padding-left: 10px;
+      color: #fff;
+      font-weight: 100;
+      float: left;
+      span.hostname {
+        font-size: 10px;
+        margin-left: 10px;
+      }
+    }
+    .temp {
+      float: right;
+      font-size: 40px;
+      color: #fff;
+      font-weight: 100;
+      margin-right: 5px;
+
+    }
+  }
   margin: 0;
   padding: 0;
   font-family: "Lato", sans-serif;
@@ -15,6 +48,7 @@ body {
       display: block;
       margin: 0;
       padding: 0;
+      margin-top: 50px;
       > li {
         width: 100%;
         display: block;

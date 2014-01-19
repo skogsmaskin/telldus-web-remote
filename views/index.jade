@@ -7,6 +7,9 @@ html
     script(src="/js/telldus-webremote.js" async defer)
   body
     .nav
-      h3 Telldus Web Remote @ #{hostname}
+      h3 
+        | Telldus Web Remote
+        span.hostname @#{hostname}
+      .temp 22°C
     #container
       | Loading...
