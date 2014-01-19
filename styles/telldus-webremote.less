@@ -1,49 +1,80 @@
-@import "libs/elements";
-@import "type";
-@import "libs/buttons";
-
-@baseLineHeight:       24px;
-@colorDark:            #444444;
-
-#container {
-  max-width: 600px;
-  margin: 0 auto;
-  margin-bottom: @baseLineHeight * 2;
-  clear: both;
-  overflow: hidden;
-  padding-top: @baseLineHeight * 2;
-}
-
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900);
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  max-width: 100%;
-  h1 {
-    text-align: center;
-    font-size: 52px;
-    color: darken(@colorDark, 10%);
+  font-family: "Lato", sans-serif;
+
+
+  h1, h2, h3, h4 {
+    text-transform: uppercase;
   }
 
-  @media screen and (max-width: 620px) {
-    padding: 10px;
+
+  #container {
+    ul.devices {
+      display: block;
+      margin: 0;
+      padding: 0;
+      > li {
+        width: 100%;
+        display: block;
+        margin: 0;
+        padding: 0;
+        clear: both;
+        overflow: hidden;
+        height: 100px;
+        position: relative;
+        &:nth-child(1n+1) {
+          background-color: #42c401;
+        }
+        &:nth-child(2n+1) {
+          background-color: #edea0c;
+        }
+        &:nth-child(3n+1) {
+          background-color: #f46302;
+        }
+        &:nth-child(4n+1) {
+          background-color: #ca1902;
+        }
+        &:nth-child(5n+1) {
+          background-color: #fe2002;
+        }
+        input[type="checkbox"]        {
+          position: absolute;
+          left: 12px;
+          top: 23px;
+          display: block;
+          -webkit-appearance: none;
+          border: 1px solid #fff;
+          height: 50px;
+          width: 50px;
+          border-radius: 50px;
+        }
+        h3 {
+          line-height: 100px;
+          margin: 0;
+          padding: 0;
+          font-size: 32px;
+          color: #fff;
+          font-weight: 100;
+          padding-left: 75px;
+        }
+        span.percent {
+          font-size: 16px;
+          font-weight: 100;
+          color: #fff;
+          position: absolute;
+          top: 40px;
+          left: 32px;
+        }
+        ul.controls {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+    }
   }
+
+
 }
-
-.nav {
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  height: @baseLineHeight * 2;
-  background-color: @colorDark;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  h3 {
-    padding-left: 10px;
-    color: #fff;
-    font-size: 18px;
-  }
-}
-
