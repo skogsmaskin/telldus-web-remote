@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 var React = require("react");
-var Hammerjs = require("hammerjs");
+require("hammerjs");
 
 var Status = require("./status");
 

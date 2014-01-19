@@ -975,7 +975,7 @@
     },
     "react": {
       "version": "0.8.0",
-      "from": "react@~0.8.0"
+      "from": "react@latest"
     },
     "reactify": {
       "version": "0.5.0",
@@ -1406,6 +1406,11 @@
     "util-extend": {
       "version": "1.0.1",
       "from": "util-extend@"
+    },
+    "hammerjs": {
+      "version": "1.0.7-dev",
+      "from": "git://github.com/EightMedia/hammer.js",
+      "resolved": "git://github.com/EightMedia/hammer.js#928e060fc1be14433d504b1b817a065ebeee008b"
     },
     "envify": {
       "version": "0.2.0",
