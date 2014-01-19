@@ -31,7 +31,7 @@ var PowerButton = React.createClass({
   render: function() {
     var label = this.props.isOn ? "Turn OFF" :  "Turn ON"
     var classes = ['default', this.props.isOn ? 'on' : 'off'];
-    return <button className={classes.join(" ")} type="button" onClick={this.toggle}>{label}</button>
+    return <input type="checkbox" className={classes.join(" ")} onClick={this.toggle} />
   }
 });
 
@@ -53,21 +53,20 @@ module.exports = React.createClass({
     var controls = [];
     var isOn = this.state.status.name == 'ON' || this.state.status.name == 'DIM';
 
-    controls.push(<li><PowerButton isOn={isOn} onChange={this.onPowerToggle.bind(this, this.state.id)}/></li>);
+    controls.push(<PowerButton isOn={isOn} onChange={this.onPowerToggle.bind(this, this.state.id)}/>);
 
     if (this.state.methods.indexOf('DIM') > -1) {
       controls.push(<li><Dimmer level={this.state.status.level} state={this.state.status.name} onDim={this.dim.bind(this, this.state.id)}/></li>);
     }
-    var name = this.state.status.name == "DIM" ? 'ON' : this.state.status.name
+    var name = this.state.status.name == "DIM" ? 'ON' : this.state.status.name;
     var badgeClasslist = ['badge'].concat(name.toLowerCase());
     return <div>
       <h3>
         {this.state.name}
       </h3>
-      <ul className="controls">
-        <li><span className={badgeClasslist.join(" ")}> {name} </span></li>
-        {controls}
-      </ul>
+      <span class={badgeClasslist.join(" ")}> {name} </span>
+      <span className="percent">0%</span>
+      {controls}
     </div>
   }
 });
