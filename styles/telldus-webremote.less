@@ -8,8 +8,11 @@
 @color6: #ea148c;
 
 body {
-
-  background-color: #fe2002;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: #000;
 
   div.nav {
     position: fixed;
@@ -17,8 +20,8 @@ body {
     width: 100%;
     left: 0;
     height: 50px;
-    z-index: 1000;
-    background-color: #fff;
+    z-index: 10000;
+    background-color: #000;
     line-height: 50px;
     h3 {
       margin: 0;
@@ -27,16 +30,18 @@ body {
       color: #666;
       font-weight: 100;
       float: left;
+      display: none;
       span.hostname {
         font-size: 10px;
         margin-left: 10px;
       }
     }
     .temp {
-      float: right;
-      font-size: 40px;
+      text-align: center;
       color: #fff;
-      font-weight: 100;
+      float: none;
+      font-size: 40px;
+      font-weight: 300;
       margin-right: 5px;
 
     }
@@ -52,6 +57,11 @@ body {
 
 
   #container {
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+
     ul.devices {
       display: block;
       margin: 0;
@@ -78,11 +88,13 @@ body {
             padding: 0;
             font-size: 32px;
             color: #fff;
-            font-weight: 100;
+            font-weight: 300;
             padding-left: 20px;
             z-index: 2000;
             transition-property: opacity;
             transition-duration: 0.5s;
+            height: 1px;
+            overflow: visible;
           }
           &.off { h3 { opacity: 0.4;}}
           &.on  { h3 { opacity: 1;}}
@@ -162,7 +174,7 @@ body {
             background-color: @color6;
           }
           > div.off {
-            background-color: darken(@color6, 35%);
+            background-color: darken(@color6, 40%);
           }
         }
         &:nth-child(6n+1) {

@@ -11,7 +11,13 @@ var Dimmer = React.createClass({
   componentDidMount: function() {
     var Hammer = require("hammerjs");
     this.availWidth = this.getDOMNode().offsetWidth;
-    this.hammer = Hammer(this.getDOMNode() );
+    this.hammer = Hammer(this.getDOMNode(), {
+      drag_block_vertical: false,
+      drag_block_horizontal: false,
+      prevent_default: false,
+      drag_min_distance: 30,
+      drag_lock_to_axis: true
+    } );
     this.hammer.on('tap', this.tap);
     this.hammer.on('dragstart', this.dragStart);
     this.hammer.on('dragend', this.dragEnd);
