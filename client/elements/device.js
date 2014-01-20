@@ -6,21 +6,26 @@ var Dimmer = require("./dimmer");
 var PowerButton = require("./power-button");
 
 var React = require("react");
+var debounce = require("lodash.debounce")
 
 var Device = React.createClass({
   getInitialState: function() {
     return this.props.initialDeviceData;
   },
-  onDim: function(deviceId, level) {
+  onDim: debounce(function(deviceId, level) {
+    this.setState({waiting: true})
     api.dim(deviceId, level, function(err, device) {
       this.setState(device);
+      this.setState({waiting: false})
     }.bind(this))
-  },
-  onPowerToggle: function(deviceId, turnOn) {
+  }, 200),
+  onPowerToggle: debounce(function(deviceId, turnOn) {
+    this.setState({waiting: true})
     api.togglePower(deviceId, turnOn, function(err, device) {
       this.setState(device);
+      this.setState({waiting: false})
     }.bind(this))
-  },
+  }, 200),
   isPoweredOn: function() {
     return this.isOn() || this.isDimmed();
   },
@@ -59,6 +64,7 @@ var Device = React.createClass({
     var classes = [];
     classes.push(this.isOn() ? 'on' : this.isDimmed() ? 'dimmed' : 'off');
     if (this.state.dimInProgress) classes.push('dimming');
+    if (this.state.waiting) classes.push('waiting');
     return <div className={classes.join(" ")}>
       <h3>{this.state.name}</h3>
       {controls}
