@@ -14,15 +14,17 @@ var Dimmer = React.createClass({
     this.hammer = Hammer(this.getDOMNode());
     this.hammer.on('tap', this.tap);
     this.hammer.on('dragstart', this.dragStart);
+    this.hammer.on('dragend', this.dragEnd);
     this.hammer.on('drag', this.drag);
   },
   componentWillUnmount: function() {
     this.hammer.off('tap', this.tap);
     this.hammer.off('dragstart', this.dragStart);
+    this.hammer.off('dragend', this.dragEnd);
     this.hammer.off('drag', this.drag );
   },
   tap: function(e) {
-    this.props.onToggle(!this.props.isOn)
+    this.props.onPowerToggle(!this.props.isOn)
   },
   dragStart: function(e) {
     var mousePos = e.gesture.center;
@@ -30,7 +32,11 @@ var Dimmer = React.createClass({
     var x = mousePos.pageX - ppos.left;
     this.setState({level: this.fromPixelValue(x)});
     this.props.onDim(this.state.level)
+    this.props.onDimStart();
     this.dragStartLevel = this.state.level;
+  },
+  dragEnd: function(e) {
+    this.props.onDimEnd()
   },
   drag: function(event) {
     var gesture = event.gesture;
