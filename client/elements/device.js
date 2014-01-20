@@ -61,10 +61,12 @@ var Device = React.createClass({
                 onDimEnd={this.onDimEnd}
                 onPowerToggle={this.onPowerToggle.bind(this, this.state.id)}/>);
     }
+
     var classes = [];
     classes.push(this.isOn() ? 'on' : this.isDimmed() ? 'dimmed' : 'off');
     if (this.state.dimInProgress) classes.push('dimming');
     if (this.state.waiting) classes.push('waiting');
+
     return <div className={classes.join(" ")}>
       <h3>{this.state.name}</h3>
       {controls}
