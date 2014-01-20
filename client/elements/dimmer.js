@@ -3,6 +3,8 @@
 var React = require("react");
 var Hammer = require("hammerjs");
 
+var pos = require('dom.position');
+
 var Dimmer = React.createClass({
   getInitialState: function() {
     return {level: this.props.level};
@@ -10,16 +12,25 @@ var Dimmer = React.createClass({
   componentDidMount: function() {
     this.availWidth = this.getDOMNode().offsetWidth;
     this.hammer = Hammer(this.getDOMNode());
+    this.hammer.on('touch', this.touch);
     this.hammer.on('dragstart', this.toggleDrag);
     this.hammer.on('dragend', this.toggleDrag);
     this.hammer.on('drag', this.drag);
   },
   componentWillUnmount: function() {
+    this.hammer.off('touch', this.touch);
     this.hammer.off('dragstart', this.toggleDrag);
     this.hammer.off('dragend', this.toggleDrag);
     this.hammer.off('drag', this.drag );
   },
-  toggleDrag: function() {
+  touch: function(e) {
+    var mousePos = e.gesture.center;
+    var ppos = pos(e.currentTarget)
+    var x = mousePos.pageX - ppos.left;
+    this.setState({level: this.fromPixelValue(x)});
+    this.props.onDim(this.state.level)
+  },
+  toggleDrag: function(e) {
     if (!this.dragging) {
       this.dragStartLevel = this.state.level;
       this.dragging = true;
