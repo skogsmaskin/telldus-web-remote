@@ -17,6 +17,7 @@ var Dimmer = React.createClass({
       prevent_default: false,
       drag_min_distance: 30,
       drag_lock_to_axis: true
+
     } );
     this.hammer.on('tap', this.tap);
     this.hammer.on('dragstart', this.dragStart);

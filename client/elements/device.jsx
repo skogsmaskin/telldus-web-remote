@@ -3,7 +3,6 @@
 var api = require("../data/api");
 
 var Dimmer = require("./dimmer");
-var PowerButton = require("./power-button");
 
 var React = require("react");
 var debounce = require("lodash.debounce")
@@ -50,12 +49,10 @@ var Device = React.createClass({
   render: function() {
     var controls = [];
 
-    controls.push(<PowerButton isOn={this.isPoweredOn()} onChange={this.onPowerToggle.bind(this, this.state.id)}/>);
-
     if (this.isDimmable()) {
       controls.push(<Dimmer 
                 level={this.getDimLevel()}
-                isOn={this.isOn()}
+                isOn={this.isPoweredOn()}
                 onDim={this.onDim.bind(this, this.state.id)}
                 onDimStart={this.onDimStart}
                 onDimEnd={this.onDimEnd}
