@@ -53,12 +53,15 @@ var Dimmer = React.createClass({
   fromPixelValue: function(px) {
     return (px/this.availWidth)*255;
   },
+  toPixelValue: function(level) {
+    return (level/255)*this.availWidth;
+  },
   toPercentage: function(level) {
     return ((100/255)*level).toFixed()
   },
   render: function() {
-    var percentage = this.toPercentage(this.state.level);
-    var style = {width: percentage+"%"}
+    var pxWidth = this.toPixelValue(this.state.level);
+    var style = {width: pxWidth+"px"}
     return <div className="dimmer">
       <span className="divider" style={style}/>
     </div>
