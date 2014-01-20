@@ -11,7 +11,7 @@ var Device = React.createClass({
   getInitialState: function() {
     return this.props.initialDeviceData;
   },
-  dim: function(deviceId, level) {
+  onDim: function(deviceId, level) {
     api.dim(deviceId, level, function(err, device) {
       this.setState(device);
     }.bind(this))
@@ -51,20 +51,16 @@ var Device = React.createClass({
       controls.push(<Dimmer 
                 level={this.getDimLevel()}
                 isOn={this.isOn()}
-                onDim={this.dim.bind(this, this.state.id)}
+                onDim={this.onDim.bind(this, this.state.id)}
                 onDimStart={this.onDimStart}
                 onDimEnd={this.onDimEnd}
                 onPowerToggle={this.onPowerToggle.bind(this, this.state.id)}/>);
     }
-    var name = this.state.status.name == "DIM" ? 'ON' : this.state.status.name;
     var classes = [];
     classes.push(this.isOn() ? 'on' : this.isDimmed() ? 'dimmed' : 'off');
     if (this.state.dimInProgress) classes.push('dimming');
     return <div className={classes.join(" ")}>
-      <h3>
-        {this.state.name}
-      </h3>
-      <span> {name} </span>
+      <h3>{this.state.name}</h3>
       {controls}
     </div>
   }
