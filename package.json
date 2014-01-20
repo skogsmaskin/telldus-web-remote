@@ -26,6 +26,8 @@
     "lodash.debounce": "~2.4.1",
     "util-extend": "~1.0.1",
     "hammerjs": "git://github.com/EightMedia/hammer.js",
-    "dom.position": "0.0.0"
+    "dom.position": "0.0.0",
+    "domready": "~0.2.13",
+    "node-jsx": "~0.2.0"
   }
 }
