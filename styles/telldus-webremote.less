@@ -58,14 +58,22 @@ body {
         overflow: hidden;
         height: 100px;
         position: relative;
-        span.divider {
+        div.dimmer {
+          display: inline;
           height: 100%;
-          width: 50%;
-          background-color: #000;
+          width: 100%;
           position: absolute;
           left: 0;
           top: 0;
-          opacity: 0.5;
+          span.divider {
+            height: 100%;
+            width: 50%;
+            background-color: #000;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0.5;
+          }
         }
         &:nth-child(1n+1) {
           background-color: #42c401;
@@ -92,6 +100,7 @@ body {
           height: 50px;
           width: 50px;
           border-radius: 50px;
+          z-index: 1000;
           &.on {
             background-color: #fff;
           }

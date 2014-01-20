@@ -7,10 +7,11 @@ var api = require("./api")
 var Hammer = require("hammerjs")
 
 var Dimmer = React.createClass({
+  getInitialState: function() {
+    return {level: this.props.level};
+  },
   componentDidMount: function() {
-    this.getDOMNode().style.width="100%";
     this.availWidth = this.getDOMNode().offsetWidth;
-    this.getDOMNode().style.width = this.toPercentage(this.getLevel())+"%";
     this.hammer = Hammer(this.getDOMNode());
     this.hammer.on('dragstart', this.toggleDrag);
     this.hammer.on('dragend', this.toggleDrag);
@@ -21,37 +22,32 @@ var Dimmer = React.createClass({
     this.hammer.off('dragend', this.toggleDrag);
     this.hammer.off('drag', this.drag );
   },
-  componentWillReceiveProps: function() {
-    this.setState({adjustingLevel: 0});
-  },
   toggleDrag: function() {
     if (!this.dragging) {
-      this.dragStartWidth = this.getDOMNode().offsetWidth;
+      this.dragStartLevel = this.state.level;
       this.dragging = true;
     }
     else {
-      this.dragStartWidth = null;
       this.dragging = false;
     }
   },
   drag: function(event) {
     var gesture = event.gesture;
-    var normalizedLevel = this.normalizeLevel(this.dragStartWidth+gesture.deltaX); 
-    this.getDOMNode().style.width = this.toPercentage(normalizedLevel)+"%";
-    this.props.onDim(normalizedLevel)
+    this.setState({level: this.dragStartLevel+this.fromPixelValue(gesture.deltaX)});
+    this.props.onDim(this.state.level)
   },
-  normalizeLevel: function(level) {
-    level = level < 0 ? 0 : level > this.availWidth ? this.availWidth : level;
-    return (255 / this.availWidth) * level
-  },
-  getLevel: function() {
-    return this.props.state === 'DIM' ? this.props.level : this.props.state === 'ON' ? 255 : 0
+  fromPixelValue: function(px) {
+    return (px/this.availWidth)*255;
   },
   toPercentage: function(level) {
     return ((100/255)*level).toFixed()
   },
   render: function() {
-    return <span className="divider"></span>
+    var percentage = this.toPercentage(this.state.level);
+    var style = {width: percentage+"%"}
+    return <div className="dimmer">
+            <span className="divider" style={style}/>
+          </div>
   }
 });
 
@@ -93,13 +89,16 @@ module.exports = React.createClass({
   isDimmable: function() {
     return this.state.methods.indexOf('DIM') > -1;
   },
+  getDimLevel: function() {
+    return this.state.status.name === 'DIM' ? this.state.status.level : this.state.status.status === 'ON' ? 255 : 0;
+  },
   render: function() {
     var controls = [];
 
     controls.push(<PowerButton isOn={this.isOn()} onChange={this.onPowerToggle.bind(this, this.state.id)}/>);
 
     if (this.isDimmable()) {
-      controls.push(<Dimmer level={this.state.status.level} state={this.state.status.name} onDim={this.dim.bind(this, this.state.id)}/>);
+      controls.push(<Dimmer level={this.getDimLevel()} onDim={this.dim.bind(this, this.state.id)}/>);
     }
     var name = this.state.status.name == "DIM" ? 'ON' : this.state.status.name;
     var badgeClasslist = ['badge'].concat(name.toLowerCase());
