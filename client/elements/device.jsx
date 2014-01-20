@@ -3,6 +3,7 @@
 var api = require("../data/api");
 
 var Dimmer = require("./dimmer");
+var PowerButton = require("./power-button");
 
 var React = require("react");
 var debounce = require("lodash.debounce")
@@ -57,6 +58,9 @@ var Device = React.createClass({
                 onDimStart={this.onDimStart}
                 onDimEnd={this.onDimEnd}
                 onPowerToggle={this.onPowerToggle.bind(this, this.state.id)}/>);
+    }
+    else {
+      controls.push(<PowerButton isOn={this.isPoweredOn()} onChange={this.onPowerToggle.bind(this, this.state.id)}/>);
     }
 
     var classes = [];
