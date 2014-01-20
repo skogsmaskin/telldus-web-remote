@@ -1,4 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900);
+
+@color1: #42c401;
+@color2: #fe2002;
+@color3: #00afec;
+@color4: #eddb00;
+@color5: #ec7632;
+@color6: #ea148c;
+
 body {
 
   background-color: #fe2002;
@@ -10,13 +18,13 @@ body {
     left: 0;
     height: 50px;
     z-index: 1000;
-    background-color: rgba(0,0,0,.5);
+    background-color: #fff;
     line-height: 50px;
     h3 {
       margin: 0;
       padding: 0;
       padding-left: 10px;
-      color: #fff;
+      color: #666;
       font-weight: 100;
       float: left;
       span.hostname {
@@ -58,37 +66,120 @@ body {
         overflow: hidden;
         height: 100px;
         position: relative;
+        > div {
+          width: 100%;
+          height: 100%;
+          transition-property: background-color;
+          transition-duration: 0.5s;
+          h3 {
+            position: absolute;
+            line-height: 100px;
+            margin: 0;
+            padding: 0;
+            font-size: 32px;
+            color: #fff;
+            font-weight: 100;
+            padding-left: 20px;
+            z-index: 2000;
+            transition-property: opacity;
+            transition-duration: 0.5s;
+          }
+          &.off { h3 { opacity: 0.4;}}
+          &.on  { h3 { opacity: 1;}}
+        }
         div.dimmer {
-          display: inline;
+          display: block;
           height: 100%;
           width: 100%;
           position: absolute;
           left: 0;
           top: 0;
           span.divider {
+            transition-property: opacity;
+            transition-duration: 0.1s;
             height: 100%;
             width: 50%;
             background-color: #000;
             position: absolute;
             left: 0;
             top: 0;
-            opacity: 0.5;
+            opacity: 0.1;
           }
         }
-        &:nth-child(1n+1) {
-          background-color: #42c401;
+        > div.dimming {
+          div.dimmer {
+            span.divider {
+              opacity: 0.6;   
+            }
+          }
         }
-        &:nth-child(2n+1) {
-          background-color: #edea0c;
+        &:nth-child(1)  {
+          > div.on {
+            background-color: @color1;  
+          }
+          > div.off {
+            
+          }
+
         }
-        &:nth-child(3n+1) {
-          background-color: #f46302;
+        &:nth-child(2) {
+          > div.on {
+            background-color: @color2;  
+          }
+          > div.off {
+            background-color: darken(@color2, 35%);
+          }
+          
         }
-        &:nth-child(4n+1) {
-          background-color: #ca1902;
+        &:nth-child(3) {
+          > div.on {
+            background-color: @color3;  
+          }
+          > div.off {
+            background-color: darken(@color3, 35%);
+          }
+          
         }
-        &:nth-child(5n+1) {
-          background-color: #fe2002;
+        &:nth-child(4) {
+          > div.on {
+            background-color: @color4;
+          }
+          > div.off {
+            background-color: darken(@color4, 35%);
+          }
+          
+        }
+        &:nth-child(5) {
+          > div.on {
+            background-color: @color5;
+          }
+          > div.off {
+            background-color: darken(@color5, 35%);
+          }
+        }
+        &:nth-child(6) {
+          > div.on {
+            background-color: @color6;
+          }
+          > div.off {
+            background-color: darken(@color6, 35%);
+          }
+        }
+        &:nth-child(6n+1) {
+          > div.on {
+            background-color: @color1;
+          }
+          > div.off {
+            background-color: darken(@color1, 30%);
+          }
+        }
+        &:nth-child(6n+2) {
+          > div.on {
+            background-color: @color2;
+          }
+          > div.off {
+            background-color: darken(@color2, 35%);
+          }
         }
         input[type="checkbox"]        {
           position: absolute;
@@ -101,18 +192,13 @@ body {
           width: 50px;
           border-radius: 50px;
           z-index: 1000;
+          display: none;
           &.on {
             background-color: #fff;
           }
         }
-        h3 {
-          line-height: 100px;
-          margin: 0;
-          padding: 0;
-          font-size: 32px;
-          color: #fff;
-          font-weight: 100;
-          padding-left: 75px;
+        .badge {
+          display: none;
         }
         span.percent {
           font-size: 16px;
@@ -130,6 +216,4 @@ body {
       }
     }
   }
-
-
 }
