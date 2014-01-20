@@ -22,7 +22,7 @@ var Dimmer = React.createClass({
     this.hammer.off('drag', this.drag );
   },
   tap: function(e) {
-    this.props.onToggle()
+    this.props.onToggle(!this.props.isOn)
   },
   dragStart: function(e) {
     var mousePos = e.gesture.center;

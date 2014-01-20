@@ -36,7 +36,7 @@ var Device = React.createClass({
     controls.push(<PowerButton isOn={this.isOn()} onChange={this.onPowerToggle.bind(this, this.state.id)}/>);
 
     if (this.isDimmable()) {
-      controls.push(<Dimmer level={this.getDimLevel()} onDim={this.dim.bind(this, this.state.id)} onToggle={this.onPowerToggle.bind(this, this.state.id)}/>);
+      controls.push(<Dimmer level={this.getDimLevel()} isOn={this.isOn()} onDim={this.dim.bind(this, this.state.id)} onToggle={this.onPowerToggle.bind(this, this.state.id)}/>);
     }
     var name = this.state.status.name == "DIM" ? 'ON' : this.state.status.name;
     var badgeClasslist = ['badge'].concat(name.toLowerCase());
