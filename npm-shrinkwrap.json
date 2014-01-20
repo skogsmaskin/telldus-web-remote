@@ -1412,6 +1412,11 @@
       "from": "git://github.com/EightMedia/hammer.js",
       "resolved": "git://github.com/EightMedia/hammer.js#928e060fc1be14433d504b1b817a065ebeee008b"
     },
+    "dom.position": {
+      "version": "0.0.0",
+      "from": "dom.position@",
+      "resolved": "http://registry.npmjs.org/dom.position/-/dom.position-0.0.0.tgz"
+    },
     "envify": {
       "version": "0.2.0",
       "from": "envify@~0.2.0",
