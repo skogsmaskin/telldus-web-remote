@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
 var React = require("react");
-var Hammer = require("hammerjs");
 
 var pos = require('dom.position');
 
@@ -10,6 +9,7 @@ var Dimmer = React.createClass({
     return {level: this.props.level};
   },
   componentDidMount: function() {
+    var Hammer = require("hammerjs");
     this.availWidth = this.getDOMNode().offsetWidth;
     this.hammer = Hammer(this.getDOMNode());
     this.hammer.on('tap', this.tap);

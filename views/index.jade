@@ -12,4 +12,5 @@ html
         span.hostname @#{hostname}
       .temp 22°C
     #container
-      | Loading...
+      != deviceList.html
+      script(id="deviceListInitialData" type="text/json")!= JSON.stringify(deviceList.initialData)

@@ -1,13 +1,13 @@
 /** @jsx React.DOM */
 
 var React = require("react");
-var Hammer = require("hammerjs");
 
 var PowerButton = React.createClass({
   toggle: function(e) {
     this.props.onChange(!this.props.isOn);
   },
   componentDidMount: function() {
+    var Hammer = require("hammerjs");
     this.hammer = Hammer(this.getDOMNode());
     this.hammer.on('tap', this.toggle );
   },

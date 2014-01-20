@@ -12,6 +12,7 @@ if (cluster.isMaster) {
   });
   return;
 }
+require("node-jsx").install({extension: '.jsx'})
 
 var express = require('express');
 var http = require('http');
@@ -31,6 +32,7 @@ var env = app.get("env");
 
 app.use('/js', browserify('./client', {
   transform: ['reactify'],
+  extensions: ['.jsx'],
   debug: env !== 'production',
   minify: env === 'production',
   gzip: env === 'production',
@@ -53,8 +55,14 @@ app.use(lessMiddleware({
 app.use(express.static(__dirname + '/public'));
 
 app.get("/", function(req, res) {
+  var React = require("react")
   var os = require("os");
-  res.render("index", {hostname: os.hostname()})
+  var DeviceList = require("./client/elements/device-list");
+  telldus.getDevices(function(err, devices) {
+    React.renderComponentToString(DeviceList({devices: devices}), function(htmlString) {
+      res.render("index", {deviceList: {initialData: devices, html: htmlString}, hostname: os.hostname()})
+    })
+  })
 });
 
 app.get("/api/devices", function(req, res) {
