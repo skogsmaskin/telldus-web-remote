@@ -1,12 +1,12 @@
 /** @jsx React.DOM */
+
 var React = require("react");
-require("hammerjs");
 
-var Status = require("./status");
+var DeviceList = require("./elements/device-list");
 
-var api = require("./api")
+var api = require("./data/api");
 
-var component = React.renderComponent(<Status/>, document.getElementById('container'));
+var deviceList = React.renderComponent(<DeviceList/>, document.getElementById('container'));
 api.get("/devices", function(err, devices) {
-  component.setState({devices: devices})
-})
+  deviceList.setState({devices: devices})
+});
