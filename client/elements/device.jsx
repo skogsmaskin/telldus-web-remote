@@ -39,19 +39,23 @@ var Device = React.createClass({
       drag_lock_to_axis: true
     });
     this.hammer.on('tap', this.tap);
-    this.hammer.on('dragstart', this.dragStart);
-    this.hammer.on('dragend', this.dragEnd);
-    this.hammer.on('drag', this.drag);
+    if (this.isDimmable()) {
+      this.hammer.on('dragstart', this.dragStart);
+      this.hammer.on('dragend', this.dragEnd);
+      this.hammer.on('drag', this.drag);
+    }
   },
 
   componentWillUnmount: function() {
     this.hammer.off('tap', this.tap);
-    this.hammer.off('dragstart', this.dragStart);
-    this.hammer.off('dragend', this.dragEnd);
-    this.hammer.off('drag', this.drag );
+    if (this.isDimmable()) {
+      this.hammer.off('dragstart', this.dragStart);
+      this.hammer.off('dragend', this.dragEnd);
+      this.hammer.off('drag', this.drag );
+    }
   },
   tap: function(e) {
-    this.onPowerToggle(!this.isPoweredOn())
+    this.onPowerToggle(this.state.id, !this.isPoweredOn())
   },
   dragStart: function(e) {
     var mousePos = e.gesture.center;
