@@ -15,8 +15,8 @@ var PowerButton = React.createClass({
     this.hammer.off('tap', this.toggle );
   },
   render: function() {
-    var classes = [this.props.isOn ? 'on' : 'off'];
-    return <input type="checkbox" className={classes.join(" ")}/>
+    var classes = ['powerbutton', this.props.isOn ? 'on' : 'off'];
+    return <div className={classes.join(" ")}/>
   }
 });
 
