@@ -34,15 +34,13 @@ var Device = React.createClass({
     this.hammer = Hammer(this.getDOMNode(), {
       drag_block_vertical: false,
       drag_block_horizontal: false,
-      prevent_default: false,
-      drag_min_distance: 30,
-      drag_lock_to_axis: true
+      prevent_default: false
     });
     this.hammer.on('tap', this.tap);
     if (this.isDimmable()) {
-      this.hammer.on('dragstart', this.dragStart);
-      this.hammer.on('dragend', this.dragEnd);
-      this.hammer.on('drag', this.drag);
+      this.hammer.on('dragstart', this.dragStart );
+      this.hammer.on('dragend', this.dragEnd );
+      this.hammer.on('drag', this.drag );
     }
   },
 
@@ -62,10 +60,10 @@ var Device = React.createClass({
     var ppos = pos(e.currentTarget);
     var x = mousePos.pageX - ppos.left;
     var level = this.fromPixelValue(x);
-    this.setDimLevel(level);
+    //this.setDimLevel(level);
     this.dragStartDimLevel = level;
-    this.onDimStart();
-    this.onDim(this.state.id, level);
+    //this.onDimStart();
+    //this.onDim(this.state.id, level);
   },
   dragEnd: function(e) {
     this.onDimEnd()
@@ -73,8 +71,22 @@ var Device = React.createClass({
   drag: function(event) {
     var gesture = event.gesture;
     var level = this.dragStartDimLevel+this.fromPixelValue(gesture.deltaX)
-    this.setDimLevel(level);
-    this.onDim(this.state.id, level)
+    var dx = parseInt(gesture.deltaX);
+    var dy = parseInt(gesture.deltaY);
+    //console.log(dx, this.state.dimInProgress);
+
+    if( dx > 30 || dx < -30 || this.state.dimInProgress ) {
+      if (!this.state.dimInProgress) {
+        this.onDimStart();
+      }
+      this.setDimLevel(level);
+      this.onDim(this.state.id, level);
+    } else if (dy > 30 || dy < -30) {
+      event.gesture.preventDefault(false);
+      return false;
+    }
+
+    
   },
   setDimLevel: function(level) {
     this.setState({status: { name: 'DIM', level: level }});
