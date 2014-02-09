@@ -36,7 +36,7 @@ app.use('/js', browserify('./client', {
   debug: env !== 'production',
   minify: env === 'production',
   gzip: env === 'production',
-  precompile: ['telldus-webremote.js']
+  precompile: ['./client/telldus-webremote.js']
 }));
 
 app.use(express.logger(env === 'development' ? 'dev' : 'default'));
