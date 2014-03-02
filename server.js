@@ -59,9 +59,8 @@ app.get("/", function(req, res) {
   var os = require("os");
   var DeviceList = require("./client/elements/device-list");
   telldus.getDevices(function(err, devices) {
-    React.renderComponentToString(DeviceList({devices: devices}), function(htmlString) {
-      res.render("index", {deviceList: {initialData: devices, html: htmlString}, hostname: os.hostname()})
-    })
+    var html = React.renderComponentToString(DeviceList({devices: devices}));
+    res.render("index", {deviceList: {initialData: devices, html: html}, hostname: os.hostname()})
   })
 });
 
