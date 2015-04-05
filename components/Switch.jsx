@@ -1,4 +1,3 @@
-import cx from "react/lib/cx";
 import React from "react";
 
 let diff = ((function() {
@@ -12,7 +11,7 @@ let diff = ((function() {
   }
 }()));
 
-module.exports = React.createClass({
+export default React.createClass({
   displayName: 'Switch',
 
   handleTouchStart(e) {

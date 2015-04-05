@@ -1,5 +1,5 @@
 import React from "react";
-import cx from "react/lib/cx";
+import classNames from "classnames";
 
 import DeviceActions from "../actions/DeviceActions";
 import {deviceEvents} from "../stores/DeviceEventStore"
@@ -50,7 +50,6 @@ export default React.createClass({
   handleDim(ev) {
     const {device} = this.props;
     var newLevel = ev.dimlevel;
-    console.log("newLevel", newLevel)
     DeviceActions.dim({deviceId: device.id, dimlevel: newLevel});
   },
 
@@ -64,7 +63,6 @@ export default React.createClass({
     if (!status) {
       return null;
     }
-    //const roundedDimLevel = Math.round(status.dimlevel);
     var on = status.on;
     return {
       on: on,
@@ -86,36 +84,47 @@ export default React.createClass({
     const syncedStatus = this.readStatus(this.getSyncedDeviceStatus());
     const queuedStatus = this.readStatus(this.state.queuedStatus);
 
+    const dimmable = device.dimmable;
+
     const inSync = !queuedStatus || (
-      diff(queuedStatus.dimlevel, syncedStatus.dimlevel) < 1 && queuedStatus.on == syncedStatus.on
+      diff(queuedStatus.dimlevel, syncedStatus.dimlevel) < 1
+      && queuedStatus.on == syncedStatus.on
+      && queuedStatus.dimmed == syncedStatus.dimmed
     );
 
-    const {dimlevel, on, dimmed} = (queuedStatus || syncedStatus);
-
-    console.log("device=%s, on=%s dimlevel=%s, dimmed=%s", device.name, on, dimlevel, dimmed)
+    const {dimlevel, on} = (queuedStatus || syncedStatus);
 
     const opacity = (dimlevel / 100) * 0.5;
     return (
-      <Switch className={cx({isOn: on, isOff: !on})} on={on} onToggle={this.handleToggle}>
-        <Dimmer
-          value={dimlevel}
-          min={0}
-          max={100}
-          step={1}
-          amplify={1.9}
-          onDim={this.handleDim}
-          style={{backgroundColor: `rgba(255, 255, 200, ${opacity})`}}
-          >
+      <Switch className={classNames({isOn: on, isOff: !on})} on={on} onToggle={this.handleToggle}>
+        {dimmable && (
+          <Dimmer
+            value={dimlevel}
+            min={0}
+            max={100}
+            step={1}
+            amplify={1.9}
+            onDim={this.handleDim}
+            style={{backgroundColor: `rgba(255, 255, 200, ${opacity})`}}
+            >
+            <h3>
+              {device.name}
+            </h3>
+            {!inSync && <Spinner/>}
+            <span className="dimlevel">
+              {
+                !on ? 'OFF' : `${Math.round(dimlevel)}%`
+              }
+            </span>
+          </Dimmer>
+        )}
+        {!dimmable && ([
           <h3>
             {device.name}
-          </h3>
-          {!inSync && <Spinner/>}
-          <span className="dimlevel">
-            {
-              !on ? 'OFF' : `${Math.round(dimlevel)}%`
-            }
-          </span>
-        </Dimmer>
+          </h3>,
+          !inSync && <Spinner/>,
+          <span className="switchState">{on ? 'ON' : 'OFF'}</span>
+        ])}
       </Switch>
     );
   }

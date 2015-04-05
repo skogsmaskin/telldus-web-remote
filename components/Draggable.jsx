@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'react/lib/cx';
 
 import domEvent from "dom-event";
 
