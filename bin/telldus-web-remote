@@ -1,4 +1,13 @@
 #!/usr/bin/env node
 
-var fork = require('child_process').fork;
-fork(__dirname+'/../server.js', {env: {NODE_ENV: 'production'}});
+var app = require("../app.js");
+
+var server = require('http').createServer(app)
+
+require("../ws")(server);
+
+server.listen(3000, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('Telldus web remote listening at http://%s:%s', host, port)
+});

@@ -8,4 +8,5 @@
 build
 npm-debug.log
 node_modules
-public/css
+public/stylesheets
+public/browser.js

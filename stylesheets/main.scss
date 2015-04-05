@@ -1,0 +1,151 @@
+$deviceHeight: 100px;
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-family: "DIN", "Lato", sans-serif;
+}
+
+
+.draggable {
+  position: relative;
+  height: 100%;
+}
+
+body {
+  cursor: default;
+  background-color: #000;
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 50px;
+    z-index: 10000;
+    background-color: #3f4142;
+    line-height: 50px;
+    ul.sensors {
+      padding: 0;
+      margin: 0;
+      li {
+        margin: 0 20px;
+        display: inline-block;
+        text-align: center;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 300;
+        margin-right: 5px;
+      }
+    }
+  }
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+
+  h1, h2, h3, h4 {
+    text-transform: uppercase;
+  }
+
+  .container {
+    margin-top: 50px;
+    cursor: default;
+    ul.devices {
+      display: block;
+      margin: 0;
+      padding: 0;
+      > li.device {
+        .dimlevel, .switchState {
+          float: right;
+          padding: 3px;
+          font-weight: bold;
+          color: rgba(0, 0, 0, 0.2);
+          margin: 2px;
+          height: 100%;
+        }
+        .react-spinner {
+          position: absolute;
+          width: 18px;
+          height: 18%;
+          top: 50%;
+          right: 4px;
+        }
+        width: 100%;
+        display: block;
+        margin: 0;
+        padding: 0;
+        clear: both;
+        overflow: hidden;
+        height: $deviceHeight;
+        > div {
+          width: 100%;
+          height: 100%;
+          h3 {
+            line-height: 100px;
+            margin: 0;
+            padding: 0;
+            font-size: 32px;
+            color: #fff;
+            font-weight: 300;
+            padding-left: 20px;
+            z-index: 2000;
+            height: 1px;
+            overflow: visible;
+          }
+          &.isOff {
+            h3 {
+              opacity: 0.4;
+            }
+          }
+          &.isOn {
+            h3 {
+              opacity: 1;
+            }
+          }
+        }
+        div.dimmer {
+          display: block;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.2);
+          left: 0;
+          top: 0;
+        }
+        > div.isDimming {
+          div.dimmer {
+            span.divider {
+              opacity: 0.6;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.react-spinner_bar {
+  -webkit-animation: react-spinner_spin 1.2s linear infinite;
+  -moz-animation: react-spinner_spin 1.2s linear infinite;
+  animation: react-spinner_spin 1.2s linear infinite;
+  border-radius: 5px;
+  background-color: white;
+  position: absolute;
+  width: 20%;
+  height: 7.8%;
+  top: -3.9%;
+  left: -10%;
+}
+
+@keyframes react-spinner_spin {
+  0% { opacity: 1; }
+  100% { opacity: 0.15; }
+}
+
+@-moz-keyframes react-spinner_spin {
+  0% { opacity: 1; }
+  100% { opacity: 0.15; }
+}
+
+@-webkit-keyframes react-spinner_spin {
+  0% { opacity: 1; }
+  100% { opacity: 0.15; }
+}
