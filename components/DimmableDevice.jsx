@@ -118,13 +118,15 @@ export default React.createClass({
             </span>
           </Dimmer>
         )}
-        {!dimmable && ([
-          <h3>
-            {device.name}
-          </h3>,
-          !inSync && <Spinner/>,
-          <span className="switchState">{on ? 'ON' : 'OFF'}</span>
-        ])}
+        {!dimmable && (
+          <div>
+            <h3>
+              {device.name}
+            </h3>
+            {!inSync && <Spinner/>}
+            <span className="switchState">{on ? 'ON' : 'OFF'}</span>
+          </div>
+        )}
       </Switch>
     );
   }
