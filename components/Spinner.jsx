@@ -1,28 +1,36 @@
-// Greatly inspired by https://github.com/chenglou/react-spinner
-import React from 'react';
+// Inspired by https://github.com/chenglou/react-spinner
+import React, {PropTypes} from 'react'
+import range from 'lodash.range'
 
 export default React.createClass({
+  propTypes: {
+    className: PropTypes.string,
+    style: PropTypes.object
+  },
+  getDefaultProps() {
+    return {
+      className: ''
+    }
+  },
   render() {
-    const {className, ...rest} = this.props;
+    const {className, style} = this.props
 
-    const bars = [];
-    for (var i = 0; i < 12; i++) {
-      const animationDelay = (i - 12) / 10 + 's';
-      const transform = 'rotate(' + (i * 30) + 'deg) translate(146%)';
-
+    const bars = range(0, 12).map(i => {
+      const animationDelay = `${(i - 12) / 10}s`
+      const transform = `rotate(${i * 30}deg) translate(146%)`
       const barStyle = {
         animationDelay,
         transform,
         WebkitAnimationDelay: animationDelay,
         WebkitTransform: transform
-      };
-      bars.push(<div style={barStyle} className="react-spinner_bar" key={i}/>);
-    }
+      }
+      return <div style={barStyle} className="react-spinner_bar" key={i}/>
+    })
 
     return (
-      <div {...rest} className={(className || '') + ' react-spinner'}>
+      <div className={`${className} react-spinner`} style={style}>
         {bars}
       </div>
-    );
+    )
   }
-});
+})

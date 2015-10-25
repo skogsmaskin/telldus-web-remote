@@ -1,26 +1,27 @@
-import "babel-core/polyfill"
+import 'babel/polyfill'
 import attachFastClick from 'fastclick'
-import React from "react";
-import Layout from "./components/Layout.jsx";
-import Rx from "rx-dom";
+import {Provider} from 'react-redux'
+import React from 'react'
+import config from './config'
+import ReactDOM from 'react-dom'
+import App from './components/App'
+import domready from 'domready'
+import createAppStore from './lib/createAppStore'
 
-import AppActions from "./actions/AppActions";
-import * as appStore from "./stores/AppStore";
-import Debug from "debug";
+import Debug from 'debug'
 
-Debug.enable(process.env.DEBUG || '');
+Debug.enable(config.debug)
 
+domready(init)
 
-let domready = Rx.DOM.ready();
+function init() {
+  attachFastClick(document.body)
 
-domready.subscribe(()=> {
-  attachFastClick(document.body);
-});
-
-domready.subscribe(()=> {
-  AppActions.boot();
-});
-
-appStore.boot.subscribe(initialData => {
-  React.render(<Layout {...initialData}/>, document);
-});
+  // Create Redux store with initial state
+  const store = createAppStore(window.__SERVER_RENDERED_PROPS__)
+  ReactDOM.render((
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  ), document.getElementById('root'))
+}

@@ -1,0 +1,170 @@
+[
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 130,
+      "model": {
+        "name": "oregon",
+        "protocol": "EA4C"
+      },
+      "value": "0.4",
+      "timestamp": 1422232603,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 130,
+      "model": {
+        "name": "oregon",
+        "protocol": "EA4C"
+      },
+      "value": "0.4",
+      "timestamp": 1422232603,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 255,
+      "model": {
+        "name": "fineoffset",
+        "protocol": "temperature"
+      },
+      "value": "-204.7",
+      "timestamp": 1422232622,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 255,
+      "model": {
+        "name": "fineoffset",
+        "protocol": "temperature"
+      },
+      "value": "-204.7",
+      "timestamp": 1422232623,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 130,
+      "model": {
+        "name": "oregon",
+        "protocol": "EA4C"
+      },
+      "value": "0.4",
+      "timestamp": 1422232642,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 130,
+      "model": {
+        "name": "oregon",
+        "protocol": "EA4C"
+      },
+      "value": "0.4",
+      "timestamp": 1422232642,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 12,
+      "model": {
+        "name": "mandolyn",
+        "protocol": "temperaturehumidity"
+      },
+      "value": "25.8",
+      "timestamp": 1422232652,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "humidity",
+      "id": 12,
+      "model": {
+        "name": "mandolyn",
+        "protocol": "temperaturehumidity"
+      },
+      "value": "25",
+      "timestamp": 1422232652,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 12,
+      "model": {
+        "name": "mandolyn",
+        "protocol": "temperaturehumidity"
+      },
+      "value": "25.8",
+      "timestamp": 1422232652,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "humidity",
+      "id": 12,
+      "model": {
+        "name": "mandolyn",
+        "protocol": "temperaturehumidity"
+      },
+      "value": "25",
+      "timestamp": 1422232652,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "temperature",
+      "id": 12,
+      "model": {
+        "name": "mandolyn",
+        "protocol": "temperaturehumidity"
+      },
+      "value": "25.9",
+      "timestamp": 1422232652,
+      "adapter": "telldus"
+    }
+  },
+  {
+    "type": "sensorState",
+    "device": {
+      "type": "humidity",
+      "id": 12,
+      "model": {
+        "name": "mandolyn",
+        "protocol": "temperaturehumidity"
+      },
+      "value": "25",
+      "timestamp": 1422232652,
+      "adapter": "telldus"
+    }
+  }
+]

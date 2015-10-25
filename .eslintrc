@@ -1,0 +1,33 @@
+{
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "eslint-plugin-import"
+  ],
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "extends": [
+    "bengler",
+    "bengler/react"
+  ],
+  "rules": {
+    "prefer-template": 1, // todo: remove this eventually
+    "import/no-unresolved": 2,
+    "import/named": 1,
+    "import/default": 0,
+    "import/namespace": 2,
+    "import/no-require": 2,
+    "import/no-named-as-default": 2,
+    "import/export": 2
+  },
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolve": {
+      "extensions": [".js", ".jsx", ".json"]
+    }
+  }
+}

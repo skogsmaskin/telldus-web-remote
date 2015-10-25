@@ -1,45 +1,72 @@
-import express from 'express';
-import path from 'path';
-import config from "./config";
-import fs from "fs";
-import helmet from 'helmet';
-import Bluebird from 'bluebird';
-import quickreload from "quickreload";
-import serve from "staticr/serve";
-import capture from "error-capture-middleware";
+import express from 'express'
+import path from 'path'
+import config from './config'
+import {Provider} from 'react-redux'
+import createAppStore from './lib/createAppStore'
+import devErrorHandler from 'dev-error-handler'
+import helmet from 'helmet'
+import quickreload from 'quickreload'
+import serve from 'staticr/serve'
+import capture from 'error-capture-middleware'
+import apiClient from './config/apiClient'
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import Layout from './components/Layout'
+import App from './components/App'
 
-let app = express();
+const app = express()
 
-export default app;
+export default app
 
-app.use(helmet());
+app.use(helmet())
 
 if (config.env === 'development') {
-  app.use(quickreload());
+  app.use(quickreload())
 }
 
 if (config.env === 'development') {
-  app.use(serve(require("./static-routes")));
+  app.use(serve(require('./static-routes')))
 }
 
 if (config.env === 'development') {
-  app.use("/", capture.js());
-  app.use("/", capture.css());
+  app.use('/', capture.js())
+  app.use('/', capture.css())
 }
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/api', require("./api"));
-app.use('/api/realtime', require("./api"));
+app.get('/', async (req, res, next) => {
 
-import {deviceEvents, getSensors, getDevices} from "./lib/backend/telldus"
+  const fetchDevices = apiClient.getDevices()
+  const fetchSensors = apiClient.getSensors()
 
-import React from "react";
-import Layout from "./components/Layout.jsx";
+  let initialState
+  try {
+    initialState = {
+      devices: {status: 'success', items: await fetchDevices},
+      sensors: {status: 'success', items: await fetchSensors}
+    }
+  } catch (error) {
+    return next(error)
+  }
+  try {
 
-app.get("/", function(req, res, next) {
-  Bluebird.join(getSensors(), getDevices()).spread((sensors, devices) => {
-    res.status(200).send(React.renderToString(<Layout sensors={sensors} devices={devices}/>))
-  })
-  .catch(next)
-});
+    const markup = ReactDOMServer.renderToString(
+      <Provider store={createAppStore(initialState)}>
+        <App/>
+      </Provider>
+    )
+
+    res.status(200).send(
+      ReactDOMServer.renderToStaticMarkup(
+        <Layout serverRenderedMarkup={markup} serverRenderedProps={initialState}/>
+      )
+    )
+  } catch (error) {
+    return next(error)
+  }
+})
+
+if (config.env === 'development') {
+  app.use(devErrorHandler)
+}

@@ -1,27 +1,32 @@
-const sass = require('node-sass');
-const config = require('../config');
+import sass from 'node-sass'
+import bourbon from 'bourbon'
+import config from '../config'
 
-const development = config.env === 'development';
+const development = config.env === 'development'
 
 module.exports = {
-  "/stylesheets/main.css": function (callback) {
+  '/stylesheets/main.css'(callback) {
     const opts = {
-      file:               require.resolve("../stylesheets/main.scss"),
-      outFile:            '/stylesheets/main.css',
+      file: require.resolve('../stylesheets/main.scss'),
+      includePaths: bourbon.includePaths,
+      sourceMap: development,
+      sourceMapEmbed: development,
+      sourceMapContents: development,
+      sourceComments: development ? 'map' : false,
+      omitSourceMapUrl: true,
+      outputStyle: development ? 'nested' : 'compressed'
+    }
 
-      sourceMap:          development,
-      sourceMapEmbed:     development,
-      sourceMapContents:  development,
-      sourceComments:     development,
-      outputStyle:        development ? 'nested' : 'compressed'
-    };
-
-    sass.render(opts, (err, result)=> {
-      console.log("RENDERED");
+    sass.render(opts, (err, result) => {
       if (err) {
         return callback(err)
       }
-      callback(null, result.css);
-    });
+      callback(null, `${result.css}${
+        result.map ? `\n/*# sourceMappingURL=data:application/json;base64,${toBase64(result.map)}*/` : ''
+      }`)
+    })
   }
-};
+}
+function toBase64(str) {
+  return new Buffer(str).toString('base64')
+}

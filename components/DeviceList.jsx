@@ -1,27 +1,33 @@
-import React from "react";
-import DimmableDevice from "./DimmableDevice.jsx";
-import Color from 'color';
+import React, {PropTypes} from 'react'
+import Color from 'color'
+import CustomPropTypes from '../lib/PropTypes'
 
-const COLORS = "#42c401 #fe2002 #00afec #eddb00 #ec7632 #ea148c".split(" ");
+const COLORS = '#42c401 #fe2002 #00afec #eddb00 #ec7632 #ea148c'.split(' ')
 
 function colorFor(index) {
-  return COLORS[index % COLORS.length];
+  return COLORS[index % COLORS.length]
 }
 
 export default React.createClass({
   displayName: 'DeviceList',
+  propTypes: {
+    items: PropTypes.arrayOf(CustomPropTypes.device),
+    itemClassName: PropTypes.string,
+    renderItem: PropTypes.func
+  },
   render() {
+    const {itemClassName, items, renderItem} = this.props
     return (
-      <ul {...this.props} className="devices">
-        {this.props.devices.map((device, i) => {
-          const color = new Color(colorFor(i)).darken(0.5).hexString();
+      <ul className="devices">
+        {items.map((item, i) => {
+          const color = new Color(colorFor(i)).darken(0.5).hexString()
           return (
-            <li key={device.id+'-'+device.name} style={{backgroundColor: color}} className="device">
-              <DimmableDevice device={device}/>
+            <li key={item.id} style={{backgroundColor: color}} className={itemClassName}>
+              {renderItem(item, i)}
             </li>
           )
         })}
       </ul>
-    );
+    )
   }
-});
+})
