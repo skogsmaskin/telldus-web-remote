@@ -1,5 +1,6 @@
-import React, {PropTypes} from'react'
+import React, {PropTypes} from 'react'
 import CustomPropTypes from '../lib/PropTypes'
+import {flatten} from 'lodash'
 
 export default React.createClass({
   displayName: 'SensorList',
@@ -10,12 +11,20 @@ export default React.createClass({
 
   render() {
     const {sensors} = this.props
-
+    const readings = sensors.map(sensor => {
+      return Object.keys(sensor.data).map(dataType => {
+        return {
+          sensorId: sensor.id,
+          type: dataType,
+          value: sensor.data[dataType].value
+        }
+      })
+    })
     return (
       <ul>
-        {sensors.slice(0, 0).map(sensor => {
-          const unit = sensor.type === 'temperature' ? '°' : '%'
-          return <li>{sensor.value + unit}</li>
+        {flatten(readings).map(reading => {
+          const unit = reading.type === 'temperature' ? '°' : '%'
+          return <li key={reading.sensorId+reading.type}>{reading.value}{unit}</li>
         })}
       </ul>
     )

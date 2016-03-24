@@ -1,4 +1,5 @@
 import React, {PropTypes} from'react'
+import DOMContentLoadedFix from 'react-domcontentloaded'
 
 export default React.createClass({
   displayName: 'Layout',
@@ -33,18 +34,18 @@ export default React.createClass({
     const {title} = this.props
     return (
       <html>
-      <head>
-        <script dangerouslySetInnerHTML={this.getDOMContentLoadedHack()}/>
-        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>{title}</title>
-        <script src="/browser.js" async/>
-        <link rel="stylesheet" href="/stylesheets/main.css"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-      </head>
-      <body>
-      <div id="root" dangerouslySetInnerHTML={this.getServerRenderedMarkup()}/>
-      <script dangerouslySetInnerHTML={this.getServerRenderedProps()}/>
-      </body>
+        <head>
+          <DOMContentLoadedFix />
+          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8"/>
+          <title>{title}</title>
+          <script src="/browser.js" async/>
+          <link rel="stylesheet" href="/stylesheets/main.css"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        </head>
+        <body>
+        <div id="root" dangerouslySetInnerHTML={this.getServerRenderedMarkup()}/>
+        <script dangerouslySetInnerHTML={this.getServerRenderedProps()}/>
+        </body>
       </html>
     )
   }

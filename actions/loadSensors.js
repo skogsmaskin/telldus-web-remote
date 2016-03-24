@@ -1,28 +1,31 @@
-//{ type: 'FETCH_POSTS' }
-//{ type: 'FETCH_POSTS', status: 'error', error: 'Oops' }
-//{ type: 'FETCH_POSTS', status: 'success', response: { ... } }
-const {LOAD_SENSORS, LOAD_SENSORS_SUCCESS, LOAD_SENSORS_ERROR, RECEIVE_SENSOR_UPDATE} = require('./actionTypes')
-const apiClient = require('../config/apiClient')
+import {
+  LOAD_SENSORS,
+  LOAD_SENSORS_SUCCESS,
+  LOAD_SENSORS_FAILURE,
+  //RECEIVE_SENSOR_UPDATE
+} from './actionTypes'
 
-function loadSensorsStart() {
+import apiClient from '../config/apiClient'
+
+export function loadSensorsStart() {
   return {
     type: LOAD_SENSORS
   }
 }
-function loadSensorsSuccess(sensors) {
+export function loadSensorsSuccess(sensors) {
   return {
     type: LOAD_SENSORS_SUCCESS,
     sensors: sensors
   }
 }
-function loadSensorsError(error) {
+export function loadSensorsError(error) {
   return {
-    type: LOAD_SENSORS_ERROR,
+    type: LOAD_SENSORS_FAILURE,
     error: error
   }
 }
 
-function loadSensors() {
+export function loadSensors() {
   return function (dispatch) {
 
     dispatch(loadSensorsStart())
@@ -31,11 +34,4 @@ function loadSensors() {
       .then(sensors => dispatch(loadSensorsSuccess(sensors)))
       .catch(error => dispatch(loadSensorsError(error)))
   }
-}
-
-module.exports = {
-  loadSensors,
-  loadSensorsStart,
-  loadSensorsSuccess,
-  loadSensorsError
 }

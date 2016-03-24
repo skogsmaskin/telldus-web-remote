@@ -16,24 +16,21 @@ body {
     top: 0;
     width: 100%;
     left: 0;
-    padding-left: 14px;
-    height: 50px;
+    height: 70px;
     z-index: 10000;
     background-color: #3f4142;
-    display: flex;
     .houseStatus {
       @include user-select(none);
       text-decoration: none;
-      flex-grow: 0.6;
       h1 {
-        padding-right: 5px;
+        padding: 4px 10px;
         display: inline-block;
         font-size: 16px;
-        line-height: 24px;
-        color: #888
+        line-height: 14px;
+        color: #aaa;
       }
       .toggleAll {
-        font-size: 12px;
+        margin-left: 10px;
         &.off {
           color: #777;
         }
@@ -46,16 +43,20 @@ body {
       }
     }
     .sensors {
-      line-height: 50px;
-      flex-grow: 0.4;
+      font-size: 0.8rem;
+      line-height: 10px;
       text-align: right;
+      padding: 10px;
+      margin: 0;
+      background-color: rgba(100, 100, 100, 0.2);
+      color: #888;
       ul {
-        padding: 0 15px;
         margin: 0;
+        padding: 0;
+        display: flex;
         li {
           display: inline-block;
           color: #fff;
-          font-size: 16px;
           font-weight: 300;
           padding: 0 5px;
         }
@@ -71,7 +72,7 @@ body {
   }
 
   .container {
-    margin-top: 50px;
+    margin-top: 70px;
     cursor: default;
     ul.devices {
       display: block;

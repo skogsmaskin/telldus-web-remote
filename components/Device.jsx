@@ -5,6 +5,7 @@ import CustomPropTypes from '../lib/PropTypes'
 import Spinner from './Spinner'
 import Dimmer from './Dimmer'
 import Tappable from './Tappable'
+import {isDimmable, isSwitch} from '../lib/deviceUtils'
 
 function getDeviceState(device) {
   return device._pendingState || device.state
@@ -12,7 +13,7 @@ function getDeviceState(device) {
 
 function toggledDevicePower(device) {
   const currentState = getDeviceState(device)
-  if (device.dimmable) {
+  if (isDimmable(device)) {
     return {
       name: currentState.on ? 'turnOff' : 'dim',
       dimlevel: currentState.on ? 0 : 100
@@ -41,17 +42,22 @@ export default React.createClass({
   },
   handleToggle() {
     const {device, onCommand} = this.props
-    onCommand(device.id, toggledDevicePower(device))
+    if (isSwitch(device)) {
+      onCommand(device.id, toggledDevicePower(device))
+    }
   },
   renderDeviceState(device) {
     const deviceState = getDeviceState(device)
-    if (device.dimmable) {
-      return deviceState.on ? `${Math.round(deviceState.dimlevel)}%` : 'OFF'
+    if (isDimmable(device)) {
+      return deviceState.on ? `${Math.round(deviceState.hasOwnProperty('dimlevel') ? deviceState.dimlevel : 100)}%` : 'OFF'
     }
-    return deviceState.on ? 'ON' : 'OFF'
+    if (isSwitch(device)) {
+      return deviceState.on ? 'ON' : 'OFF'
+    }
+    return null
   },
   renderDeviceInfo(device) {
-    const inSync = !('_pendingState' in device)
+    const inSync = !device._pendingState
     return (
       <div className="deviceContainer">
         <div className="deviceInfo">
@@ -61,7 +67,7 @@ export default React.createClass({
         </div>
         <div className="deviceState">
           {this.renderDeviceState(device)}
-          {!inSync && <Spinner/>}
+          {!inSync && <Spinner />}
         </div>
       </div>
     )
@@ -92,7 +98,7 @@ export default React.createClass({
     return (
       <Tappable onTap={this.handleToggle}>
         <div className={classNames({isOn: deviceState.on})}>
-          {device.dimmable ? wrapInDimmable(deviceInfo) : deviceInfo}
+          {isDimmable(device) ? wrapInDimmable(deviceInfo) : deviceInfo}
         </div>
       </Tappable>
     )

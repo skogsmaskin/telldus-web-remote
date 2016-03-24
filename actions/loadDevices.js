@@ -1,30 +1,30 @@
-const {
+import {
   LOAD_DEVICES,
   LOAD_DEVICES_SUCCESS,
-  LOAD_DEVICES_ERROR
-} = require('./actionTypes')
+  LOAD_DEVICES_FAILURE
+} from './actionTypes'
 
-const apiClient = require('../config/apiClient')
+import apiClient from '../config/apiClient'
 
-function loadDevicesStart() {
+export function loadDevicesStart() {
   return {
     type: LOAD_DEVICES
   }
 }
-function loadDevicesSuccess(devices) {
+export function loadDevicesSuccess(devices) {
   return {
     type: LOAD_DEVICES_SUCCESS,
     devices: devices
   }
 }
-function loadDevicesError(error) {
+export function loadDevicesError(error) {
   return {
-    type: LOAD_DEVICES_ERROR,
+    type: LOAD_DEVICES_FAILURE,
     error: error
   }
 }
 
-function loadDevices() {
+export function loadDevices() {
   return function (dispatch) {
 
     dispatch(loadDevicesStart())
@@ -33,11 +33,4 @@ function loadDevices() {
       .then(devices => dispatch(loadDevicesSuccess(devices)))
       .catch(error => dispatch(loadDevicesError(error)))
   }
-}
-
-module.exports = {
-  loadDevices,
-  loadDevicesStart,
-  loadDevicesSuccess,
-  loadDevicesError
 }

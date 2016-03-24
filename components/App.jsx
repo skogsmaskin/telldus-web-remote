@@ -1,17 +1,17 @@
-import React, {PropTypes} from'react'
-import DeviceList from'./DeviceList'
-import Device from'./Device'
-import {connect} from'react-redux'
+import React, {PropTypes} from 'react'
+import DeviceList from './DeviceList'
+import Device from './Device'
+import {connect} from 'react-redux'
 import config from '../config'
-import {loadDevices} from'../actions/loadDevices'
-import {loadSensors} from'../actions/loadSensors'
-import {sendDeviceCommand} from'../actions/commands'
+import {loadDevices} from '../actions/loadDevices'
+import {loadSensors} from '../actions/loadSensors'
+import {sendDeviceCommand} from '../actions/commands'
 import SensorList from './SensorList'
 import Header from './Header'
 import CustomPropTypes from '../lib/PropTypes'
 
 function setDevicePower(device, turnOn) {
-  if (device.dimmable) {
+  if (device.commands.includes('dim')) {
     return {
       name: turnOn ? 'dim' : 'turnOff',
       dimlevel: turnOn ? 100 : 0
@@ -41,7 +41,7 @@ const App = React.createClass({
   },
 
   renderDevice(device) {
-    return <Device device={device} onCommand={this.handleDeviceCommand}/>
+    return <Device device={device} onCommand={this.handleDeviceCommand} />
   },
 
   toggleAll(on, e) {
@@ -62,6 +62,9 @@ const App = React.createClass({
     return (
       <div className="container">
         <Header>
+          <div className="sensors">
+            <SensorList sensors={sensors.items} />
+          </div>
           <div>
             <a href="#" onClick={this.toggleAll.bind(null, !someOn)} className="houseStatus">
               <h1>{config.house}</h1>
@@ -69,14 +72,11 @@ const App = React.createClass({
               {someOn && <span className="toggleAll off">all off</span>}
             </a>
           </div>
-          <div className="sensors">
-            <SensorList sensors={sensors.items}/>
-          </div>
         </Header>
         <DeviceList
           renderItem={this.renderDevice}
           itemClassName="device"
-          items={devices.items}/>
+          items={devices.items} />
       </div>
     )
   }

@@ -1,11 +1,11 @@
-var defaults = require('defaults')
+import defaults from 'defaults'
 
-var DEFAULTS = {
+const DEFAULTS = {
   env: 'development',
   port: 3000
 }
 
-module.exports = defaults({
+export default defaults({
   house: 'Bjørges Leilighet',
   env: process.env.NODE_ENV,
   port: process.env.PORT,

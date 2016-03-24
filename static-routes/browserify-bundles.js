@@ -1,11 +1,13 @@
-const browserify = require('browserify')
-const rebundler = require('rebundler')
-const SpawnStream = require('spawn-stream')
+import browserify from 'browserify'
+import rebundler from 'rebundler'
+import SpawnStream from 'spawn-stream'
 
-const env = require('../config').env
-const collapser = require('bundle-collapser/plugin')
+import config from '../config'
+import collapser from 'bundle-collapser/plugin'
 
-const babelify = require('babelify')
+import babelify from 'babelify'
+
+const {env} = config
 
 function createBundle(entry) {
   return rebundler({noop: env !== 'development'}, (cache, pkgCache) => {
@@ -33,7 +35,7 @@ function uglify() {
 
 const main = createBundle(require.resolve('../browser.js'))
 
-module.exports = {
+export default {
   '/browser.js'() {
     const b = main()
 

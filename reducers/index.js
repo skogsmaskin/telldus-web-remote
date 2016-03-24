@@ -1,10 +1,12 @@
-const {combineReducers} = require('redux')
+import {combineReducers} from 'redux'
+import update from 'update-object'
 
-const {
+import {
   LOAD_SENSORS,
   LOAD_SENSORS_SUCCESS,
   LOAD_SENSORS_FAILURE,
-  RECEIVE_SENSOR_UPDATE,
+  RECEIVE_SENSOR_EVENT,
+  RECEIVE_DEVICE_EVENT,
 
   LOAD_DEVICES,
   LOAD_DEVICES_SUCCESS,
@@ -13,7 +15,7 @@ const {
   DEVICE_COMMAND,
   DEVICE_COMMAND_SUCCESS,
   DEVICE_COMMAND_FAILURE
-} = require('../actions/actionTypes')
+} from '../actions/actionTypes'
 
 function getPendingState(device, command) {
   switch (command.name) {
@@ -65,16 +67,50 @@ function devices(state = {items: []}, action) {
           if (item.id !== action.deviceId) {
             return item
           }
-          return action.device
+          return Object.assign({}, item, {
+            _pendingState: null,
+            state: action.deviceState
+          })
         })
       })
     case DEVICE_COMMAND_FAILURE:
       return state
+    case RECEIVE_DEVICE_EVENT:
+      return Object.assign({}, state, {
+        items: state.items.map(item => {
+          if (item.id !== action.event.deviceId) {
+            return item
+          }
+          switch (action.event.type) {
+            case 'statechange':
+              return Object.assign({}, item, {
+                state: action.event.state,
+                _pendingState: null
+              })
+            case 'change':
+              return action.event.device
+            default:
+              return item
+          }
+        })
+      })
     default:
       return state
   }
 }
 
+function updateSensorData(sensor, sensorEvent) {
+  return update(sensor, {
+    data: {
+      [sensorEvent.type]: {
+        $set: {
+          value: sensorEvent.value,
+          timestamp: sensorEvent.timestamp
+        }
+      }
+    }
+  })
+}
 
 function sensors(state = {items: []}, action) {
   switch (action.type) {
@@ -84,21 +120,22 @@ function sensors(state = {items: []}, action) {
       return {status: 'success', items: action.sensors}
     case LOAD_SENSORS_FAILURE:
       return {status: 'error', error: action.error}
-    case RECEIVE_SENSOR_UPDATE:
+    case RECEIVE_SENSOR_EVENT:
       return Object.assign({}, state, {
         items: state.items.map(item => {
-          if (item.id !== action.deviceId) {
+          if (item.id !== action.event.sensorId) {
             return item
           }
-          return action.sensor
+          return updateSensorData(item, action.event)
         })
       })
+
     default:
       return state
   }
 }
 
-module.exports = combineReducers({
+export default combineReducers({
   devices,
   sensors
 })

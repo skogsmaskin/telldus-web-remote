@@ -13,6 +13,8 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import Layout from './components/Layout'
 import App from './components/App'
+import browserifyBundles from './static-routes/browserify-bundles'
+import sassBundles from './static-routes/stylesheets'
 
 const app = express()
 
@@ -25,7 +27,7 @@ if (config.env === 'development') {
 }
 
 if (config.env === 'development') {
-  app.use(serve(require('./static-routes')))
+  app.use(serve([browserifyBundles, sassBundles]))
 }
 
 if (config.env === 'development') {
@@ -33,38 +35,41 @@ if (config.env === 'development') {
   app.use('/', capture.css())
 }
 
+app.get('/ping', (req, res) => {
+  res.status(200).send('PONG')
+})
+
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', async (req, res, next) => {
+app.get('/', (req, res, next) => {
 
   const fetchDevices = apiClient.getDevices()
   const fetchSensors = apiClient.getSensors()
 
-  let initialState
-  try {
-    initialState = {
-      devices: {status: 'success', items: await fetchDevices},
-      sensors: {status: 'success', items: await fetchSensors}
-    }
-  } catch (error) {
-    return next(error)
-  }
-  try {
+  const loadInitialState = Promise.all([fetchDevices, fetchSensors])
+    .then(([devices, sensors]) => {
+      return {
+        devices: {status: 'success', items: devices},
+        sensors: {status: 'success', items: sensors}
+      }
+    })
 
-    const markup = ReactDOMServer.renderToString(
+  const getMarkup = loadInitialState.then(initialState => {
+    return ReactDOMServer.renderToString(
       <Provider store={createAppStore(initialState)}>
-        <App/>
+        <App />
       </Provider>
     )
+  })
 
+  Promise.all([loadInitialState, getMarkup]).then(([initialState, markup]) => {
     res.status(200).send(
       ReactDOMServer.renderToStaticMarkup(
-        <Layout serverRenderedMarkup={markup} serverRenderedProps={initialState}/>
+        <Layout serverRenderedMarkup={markup} serverRenderedProps={initialState} />
       )
     )
-  } catch (error) {
-    return next(error)
-  }
+  })
+  .catch(next)
 })
 
 if (config.env === 'development') {

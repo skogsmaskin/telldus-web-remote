@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 
-import domEvent from 'dom-event'
+import on from '../lib/util/dom-on'
 
 export default React.createClass({
   displayName: 'Draggable',
@@ -81,26 +81,26 @@ export default React.createClass({
     })
     this._prevPosition = {x, y}
   },
-  removeWindowMouseListeners() {
-    domEvent.off(window, 'touchend', this.handleWindowTouchEnd)
-    domEvent.off(window, 'mouseup', this.handleWindowMouseUp)
 
-    domEvent.off(window, 'touchmove', this.handleWindowTouchMove)
-    domEvent.off(window, 'mousemove', this.handleWindowMouseMove)
+  removeWindowMouseListeners() {
+    this.removeListeners.forEach(fn => fn())
   },
 
   addWindowMouseListeners() {
-    domEvent.on(window, 'touchend', this.handleWindowTouchEnd)
-    domEvent.on(window, 'mouseup', this.handleWindowMouseUp)
-
-    domEvent.on(window, 'touchmove', this.handleWindowTouchMove)
-    domEvent.on(window, 'mousemove', this.handleWindowMouseMove)
+    this.removeListeners = [
+      ['touchEnd', this.handleWindowTouchEnd],
+      ['mouseup', this.handleWindowMouseUp],
+      ['touchmove', this.handleWindowTouchMove],
+      ['mousemove', this.handleWindowMouseMove]
+    ]
+      .map(([event, handler]) => on(window, event, handler))
   },
 
   render() {
     const {children, className, style} = this.props
     return (
-      <div style={style}
+      <div
+        style={style}
         className={['draggable', className].filter(Boolean).join(' ')}
         onMouseDown={this.handleMouseDown}
         onTouchStart={this.handleTouchStart}>

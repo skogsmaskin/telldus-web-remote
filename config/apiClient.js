@@ -1,4 +1,3 @@
-const createClient = require('../api/createClient')
-const httpApiImpl = require('../api/http')
+import httpClient from '../lib/httpClient'
 
-export default createClient(httpApiImpl({baseUrl: 'http://localhost:3005'}))
+export default httpClient({baseUrl: 'http://10.0.1.2:3005'})

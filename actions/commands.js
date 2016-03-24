@@ -1,10 +1,10 @@
 //{ type: 'FETCH_POSTS' }
 //{ type: 'FETCH_POSTS', status: 'error', error: 'Oops' }
 //{ type: 'FETCH_POSTS', status: 'success', response: { ... } }
-const {DEVICE_COMMAND, DEVICE_COMMAND_ERROR, DEVICE_COMMAND_SUCCESS} = require('./actionTypes')
-const apiClient = require('../config/apiClient')
-const latest = require('promise-latest')
-const debounce = require('debounce-promise')
+import {DEVICE_COMMAND, DEVICE_COMMAND_FAILURE, DEVICE_COMMAND_SUCCESS} from './actionTypes'
+import apiClient from '../config/apiClient'
+import latest from 'promise-latest'
+import debounce from 'debounce-promise'
 
 function sendCommandStart(deviceId, command) {
   return {
@@ -18,13 +18,13 @@ function sendCommandSuccess(deviceId, command, newDeviceState) {
     type: DEVICE_COMMAND_SUCCESS,
     deviceId,
     command,
-    device: newDeviceState
+    deviceState: newDeviceState
   }
 }
 
 function sendCommandError(deviceId, command, error) {
   return {
-    type: DEVICE_COMMAND_ERROR,
+    type: DEVICE_COMMAND_FAILURE,
     deviceId,
     command,
     device: error
@@ -54,7 +54,7 @@ function sendCommand(deviceId, command) {
   }
 }
 
-function sendDeviceCommand(deviceId, command) {
+export function sendDeviceCommand(deviceId, command) {
 
   return function (dispatch) {
     dispatch(sendCommandStart(deviceId, command))
@@ -64,8 +64,4 @@ function sendDeviceCommand(deviceId, command) {
       .catch(error => dispatch(sendCommandError(deviceId, command, error)))
 
   }
-}
-
-module.exports = {
-  sendDeviceCommand
 }
