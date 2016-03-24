@@ -18,7 +18,7 @@ export default React.createClass({
   render() {
     const {className, style} = this.props
 
-    const bars = range(12).map(i => {
+    const bars = range(12).map((_, i) => {
       const animationDelay = `${(i - 12) / 10}s`
       const transform = `rotate(${i * 30}deg) translate(146%)`
       const barStyle = {
