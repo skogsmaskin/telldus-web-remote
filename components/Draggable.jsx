@@ -88,7 +88,7 @@ export default React.createClass({
 
   addWindowMouseListeners() {
     this.removeListeners = [
-      ['touchEnd', this.handleWindowTouchEnd],
+      ['touchend', this.handleWindowTouchEnd],
       ['mouseup', this.handleWindowMouseUp],
       ['touchmove', this.handleWindowTouchMove],
       ['mousemove', this.handleWindowMouseMove]
