@@ -16,7 +16,7 @@ function createBundle(entry) {
       packageCache: pkgCache,
       extensions: ['.jsx'],
       debug: env == 'development',
-      fullPaths: true || env == 'development'
+      fullPaths: env == 'development'
     })
       .transform(babelify)
       .transform('envify', {global: true})
