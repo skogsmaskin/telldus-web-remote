@@ -40,7 +40,12 @@ app.get('/ping', (req, res) => {
 })
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use('/api', createWSApi({backend: config.backend}))
+
+const backend = config.backendName == 'mock'
+  ? require('telldus-ws/build/backend-mock.js') // eslint-disable-line import/no-commonjs
+  : require('telldus-ws/build/backend-telldus.js') // eslint-disable-line import/no-commonjs
+
+app.use('/api', createWSApi({backend}))
 
 app.get('/', (req, res, next) => {
 
