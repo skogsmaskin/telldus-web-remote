@@ -4,7 +4,6 @@ import CustomPropTypes from '../lib/PropTypes'
 
 import Spinner from './Spinner'
 import Dimmer from './Dimmer'
-import Tappable from './Tappable'
 import {isDimmable, isSwitch} from '../lib/deviceUtils'
 
 function getDeviceState(device) {
@@ -56,6 +55,7 @@ export default React.createClass({
     }
     return null
   },
+
   renderDeviceInfo(device) {
     const inSync = !device._pendingState
     return (
@@ -72,35 +72,36 @@ export default React.createClass({
       </div>
     )
   },
-  render() {
+
+  renderDimmer() {
     const {device} = this.props
     const deviceState = getDeviceState(device) || {}
 
-    const deviceInfo = this.renderDeviceInfo(device)
-
-    const wrapInDimmable = children => {
-      const opacity = deviceState.on ? (deviceState.dimlevel / 100) * 0.5 : 0
-      return (
-        <Dimmer
-          value={deviceState.dimlevel}
-          min={0}
-          max={100}
-          step={1}
-          amplify={1.9}
-          onDim={this.handleDim}
-          style={{backgroundColor: `rgba(255, 255, 200, ${opacity})`}}
-          >
-          {children}
-        </Dimmer>
-      )
-    }
+    const opacity = deviceState.on ? (deviceState.dimlevel / 100) * 0.5 : 0
 
     return (
-      <Tappable onTap={this.handleToggle}>
-        <div className={classNames({isOn: deviceState.on})}>
-          {isDimmable(device) ? wrapInDimmable(deviceInfo) : deviceInfo}
-        </div>
-      </Tappable>
+      <Dimmer
+        value={deviceState.dimlevel}
+        min={0}
+        max={100}
+        step={1}
+        amplify={1.9}
+        onDim={this.handleDim}
+        onSwitch={this.handleToggle}
+        style={{backgroundColor: `rgba(255, 255, 200, ${opacity})`}}
+      >
+        {this.renderDeviceInfo(device)}
+      </Dimmer>
+    )
+  },
+
+  render() {
+    const {device} = this.props
+    const deviceState = getDeviceState(device) || {}
+    return (
+      <div onClick={this.handleToggle} className={classNames({isOn: deviceState.on})}>
+        {isDimmable(device) ? this.renderDimmer() : this.renderDeviceInfo(device)}
+      </div>
     )
   }
 })
