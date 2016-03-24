@@ -15,7 +15,6 @@ import App from './components/App'
 import browserifyBundles from './static-routes/browserify-bundles'
 import sassBundles from './static-routes/stylesheets'
 import createWSApi from 'telldus-ws'
-import telldusBackend from 'telldus-ws/build/backend-telldus'
 
 const app = express()
 
@@ -41,7 +40,7 @@ app.get('/ping', (req, res) => {
 })
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use('/api', createWSApi({backend: telldusBackend}))
+app.use('/api', createWSApi({backend: config.backend}))
 
 app.get('/', (req, res, next) => {
 
