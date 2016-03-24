@@ -3,7 +3,6 @@ import path from 'path'
 import config from './config'
 import {Provider} from 'react-redux'
 import createAppStore from './lib/createAppStore'
-import devErrorHandler from 'dev-error-handler'
 import helmet from 'helmet'
 import quickreload from 'quickreload'
 import serve from 'staticr/serve'
@@ -15,6 +14,8 @@ import Layout from './components/Layout'
 import App from './components/App'
 import browserifyBundles from './static-routes/browserify-bundles'
 import sassBundles from './static-routes/stylesheets'
+import createWSApi from 'telldus-ws'
+import telldusBackend from 'telldus-ws/build/backend-telldus'
 
 const app = express()
 
@@ -40,6 +41,7 @@ app.get('/ping', (req, res) => {
 })
 
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/api', createWSApi({backend: telldusBackend}))
 
 app.get('/', (req, res, next) => {
 
@@ -73,5 +75,5 @@ app.get('/', (req, res, next) => {
 })
 
 if (config.env === 'development') {
-  app.use(devErrorHandler)
+  app.use(require('dev-error-handler'))
 }

@@ -1,6 +1,9 @@
 // Inspired by https://github.com/chenglou/react-spinner
 import React, {PropTypes} from 'react'
-import range from 'lodash.range'
+
+function range(num) {
+  return new Array(num).fill(0)
+}
 
 export default React.createClass({
   propTypes: {
@@ -15,7 +18,7 @@ export default React.createClass({
   render() {
     const {className, style} = this.props
 
-    const bars = range(0, 12).map(i => {
+    const bars = range(12).map(i => {
       const animationDelay = `${(i - 12) / 10}s`
       const transform = `rotate(${i * 30}deg) translate(146%)`
       const barStyle = {

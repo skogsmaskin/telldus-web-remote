@@ -4,7 +4,7 @@ import config from '../config'
 
 const development = config.env === 'development'
 
-module.exports = {
+export default {
   '/stylesheets/main.css'(callback) {
     const opts = {
       file: require.resolve('../stylesheets/main.scss'),
@@ -27,6 +27,7 @@ module.exports = {
     })
   }
 }
+
 function toBase64(str) {
   return new Buffer(str).toString('base64')
 }
