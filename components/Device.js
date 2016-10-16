@@ -58,7 +58,7 @@ export default class DimmableDevice extends React.PureComponent {
     return null
   };
 
-  renderDeviceInfo = device => {
+  renderDeviceInfo(device) {
     const inSync = !device._pendingState
     return (
       <div className="deviceContainer">
@@ -73,10 +73,15 @@ export default class DimmableDevice extends React.PureComponent {
         </div>
       </div>
     )
-  };
+  }
 
-  renderDimmer = () => {
-    const {device} = this.props
+  renderSwitch(device) {
+    return (
+      <div onClick={this.handleToggle}>{this.renderDeviceInfo(device)}</div>
+    )
+  }
+
+  renderDimmer(device) {
     const deviceState = getDeviceState(device) || {}
 
     const opacity = deviceState.on ? (deviceState.dimlevel / 100) * 0.5 : 0
@@ -90,19 +95,20 @@ export default class DimmableDevice extends React.PureComponent {
         amplify={1.9}
         onDim={this.handleDim}
         onSwitch={this.handleToggle}
+        onClick={this.handleToggle}
         style={{backgroundColor: `rgba(255, 255, 200, ${opacity})`}}
       >
         {this.renderDeviceInfo(device)}
       </Dimmer>
     )
-  };
+  }
 
   render() {
     const {device} = this.props
     const deviceState = getDeviceState(device) || {}
     return (
-      <div onClick={this.handleToggle} className={classNames({isOn: deviceState.on})}>
-        {isDimmable(device) ? this.renderDimmer() : this.renderDeviceInfo(device)}
+      <div className={classNames({isOn: deviceState.on})}>
+        {isDimmable(device) ? this.renderDimmer(device) : this.renderSwitch(device)}
       </div>
     )
   }

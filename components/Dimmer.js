@@ -6,9 +6,7 @@ function clamp(min, max, val) {
   return Math.max(min, Math.min(max, val))
 }
 
-export default class extends React.PureComponent {
-  static displayName = 'Dimmer';
-
+export default class Dimmer extends React.PureComponent {
   static propTypes = {
     onDim: React.PropTypes.func,
     value: React.PropTypes.number,
@@ -30,11 +28,11 @@ export default class extends React.PureComponent {
     onDim() {}
   };
 
-  handleDrag = ev => {
+  handleDrag = delta => {
     const width = ReactDOM.findDOMNode(this).offsetWidth
     const {value, min, max, amplify, onDim} = this.props
 
-    const val = ev.x * amplify / width * max
+    const val = delta.x * amplify / width * max
 
     onDim({
       dimlevel: clamp(min, max, value + val)
@@ -42,12 +40,13 @@ export default class extends React.PureComponent {
   };
 
   render() {
-    const {children, className, style} = this.props
+    const {children, className, style, ...rest} = this.props
     return (
       <Draggable
         style={style}
         className={className}
         onDrag={this.handleDrag}
+        {...rest}
       >
         {children}
       </Draggable>

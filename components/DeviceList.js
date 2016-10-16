@@ -1,8 +1,14 @@
 import React, {PropTypes} from 'react'
 import Color from 'color'
+import {flatten} from 'lodash'
 import CustomPropTypes from '../lib/PropTypes'
+import palette from '../config/palette'
+import at from 'circular-at'
 
-const COLORS = '#42c401 #fe2002 #00afec #eddb00 #ec7632 #ea148c'.split(' ')
+const DAY = 4
+const COLORS = flatten(palette.map(group => {
+  return at(group.colors.slice(0, 4).map(color => color.hex), DAY)
+}))
 
 function colorFor(index) {
   return COLORS[index % COLORS.length]

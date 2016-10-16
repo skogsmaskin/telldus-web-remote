@@ -905,6 +905,11 @@
       "from": "cipher-base@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/cipher-base/-/cipher-base-1.0.3.tgz"
     },
+    "circular-at": {
+      "version": "1.0.1",
+      "from": "circular-at@latest",
+      "resolved": "https://registry.npmjs.org/circular-at/-/circular-at-1.0.1.tgz"
+    },
     "circular-json": {
       "version": "0.3.1",
       "from": "circular-json@>=0.3.0 <0.4.0",
