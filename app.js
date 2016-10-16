@@ -14,7 +14,7 @@ import Layout from './components/Layout'
 import App from './components/App'
 import browserifyBundles from './static-routes/browserify-bundles'
 import sassBundles from './static-routes/stylesheets'
-import createWSApi from 'telldus-ws'
+import createWSApi from '@bjoerge/telldus-ws'
 
 const app = express()
 
@@ -42,8 +42,8 @@ app.get('/ping', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')))
 
 const backend = config.backendName == 'mock'
-  ? require('telldus-ws/build/backend-mock.js') // eslint-disable-line import/no-commonjs
-  : require('telldus-ws/build/backend-telldus.js') // eslint-disable-line import/no-commonjs
+  ? require('@bjoerge/telldus-ws/build/backend-mock.js') // eslint-disable-line import/no-commonjs
+  : require('@bjoerge/telldus-ws/build/backend-telldus.js') // eslint-disable-line import/no-commonjs
 
 app.use('/api', createWSApi({backend}))
 
