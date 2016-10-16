@@ -5,13 +5,12 @@ import CustomPropTypes from '../lib/PropTypes'
 import palette from '../config/palette'
 import at from 'circular-at'
 
-const DAY = 4
 const COLORS = flatten(palette.map(group => {
-  return at(group.colors.slice(0, 4).map(color => color.hex), DAY)
+  return group.colors.slice(2, 4).map(color => color.hex)
 }))
 
 function colorFor(index) {
-  return COLORS[index % COLORS.length]
+  return at(COLORS, index)
 }
 
 export default class extends React.PureComponent {
