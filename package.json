@@ -61,6 +61,7 @@
     "redux-thunk": "^2.0.1",
     "spawn-stream": "^1.0.2",
     "staticr": "^4.0.2",
+    "telldus": "git+ssh://git@github.com/bjoerge/telldus.git",
     "telldus-ws": "git+ssh://git@github.com/bjoerge/telldus-ws.git",
     "uglify-js": "^2.6.2",
     "update-object": "^1.0.0"

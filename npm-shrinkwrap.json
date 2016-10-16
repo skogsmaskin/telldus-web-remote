@@ -3899,8 +3899,8 @@
     },
     "telldus": {
       "version": "0.0.9",
-      "from": "bjoerge/telldus",
-      "resolved": "git+https://github.com/bjoerge/telldus.git#44c7165fc046e23d5fc92ab62e7822da61c9bf20"
+      "from": "git+ssh://git@github.com/bjoerge/telldus.git",
+      "resolved": "git+ssh://git@github.com/bjoerge/telldus.git#44c7165fc046e23d5fc92ab62e7822da61c9bf20"
     },
     "telldus-ws": {
       "version": "1.0.0",
@@ -3936,6 +3936,11 @@
           "version": "1.0.0",
           "from": "nocache@1.0.0",
           "resolved": "https://registry.npmjs.org/nocache/-/nocache-1.0.0.tgz"
+        },
+        "telldus": {
+          "version": "0.0.9",
+          "from": "bjoerge/telldus",
+          "resolved": "git+https://github.com/bjoerge/telldus.git#44c7165fc046e23d5fc92ab62e7822da61c9bf20"
         }
       }
     },
