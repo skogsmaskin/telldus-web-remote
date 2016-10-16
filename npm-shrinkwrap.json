@@ -3904,8 +3904,8 @@
     },
     "telldus-ws": {
       "version": "1.0.0",
-      "from": "bjoerge/telldus-ws",
-      "resolved": "git+https://github.com/bjoerge/telldus-ws.git#54b3cfe8f4a3cf2a687f4374fbe83094cc29597e",
+      "from": "git+ssh://git@github.com/bjoerge/telldus-ws.git",
+      "resolved": "git+ssh://git@github.com/bjoerge/telldus-ws.git#54b3cfe8f4a3cf2a687f4374fbe83094cc29597e",
       "dependencies": {
         "frameguard": {
           "version": "1.1.0",
