@@ -22,9 +22,10 @@ function setDevicePower(device, turnOn) {
   }
 }
 
-const App = React.createClass({
-  displayName: 'App',
-  propTypes: {
+class App extends React.PureComponent {
+  static displayName = 'App';
+
+  static propTypes = {
     sendDeviceCommand: PropTypes.func,
     devices: PropTypes.shape({
       status: PropTypes.oneOf(['success', 'error', 'pending']),
@@ -34,17 +35,17 @@ const App = React.createClass({
       status: PropTypes.oneOf(['success', 'error', 'pending']),
       items: PropTypes.arrayOf(CustomPropTypes.sensor)
     })
-  },
+  };
 
-  handleDeviceCommand(deviceId, command) {
+  handleDeviceCommand = (deviceId, command) => {
     this.props.sendDeviceCommand(deviceId, command)
-  },
+  };
 
-  renderDevice(device) {
+  renderDevice = device => {
     return <Device device={device} onCommand={this.handleDeviceCommand} />
-  },
+  };
 
-  toggleAll(on, e) {
+  toggleAll = (on, e) => {
     e.preventDefault()
     const {devices} = this.props
     devices.items.forEach(dev => {
@@ -52,7 +53,7 @@ const App = React.createClass({
         this.props.sendDeviceCommand(dev.id, setDevicePower(dev, on))
       }
     })
-  },
+  };
 
   render() {
     const {devices, sensors} = this.props
@@ -76,11 +77,12 @@ const App = React.createClass({
         <DeviceList
           renderItem={this.renderDevice}
           itemClassName="device"
-          items={devices.items} />
+          items={devices.items}
+        />
       </div>
     )
   }
-})
+}
 
 // Which part of the Redux global state does our component want to receive as props?
 function mapStateToProps(state) {

@@ -1,15 +1,15 @@
 import React from 'react'
-import Draggable from './Draggable.jsx'
+import Draggable from './Draggable'
 import ReactDOM from 'react-dom'
 
 function clamp(min, max, val) {
   return Math.max(min, Math.min(max, val))
 }
 
-export default React.createClass({
-  displayName: 'Dimmer',
+export default class extends React.PureComponent {
+  static displayName = 'Dimmer';
 
-  propTypes: {
+  static propTypes = {
     onDim: React.PropTypes.func,
     value: React.PropTypes.number,
     level: React.PropTypes.number,
@@ -19,20 +19,18 @@ export default React.createClass({
     children: React.PropTypes.node,
     className: React.PropTypes.string,
     style: React.PropTypes.object
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      value: 50,
-      level: 100,
-      min: 0,
-      max: 100,
-      amplify: 1,
-      onDim() {}
-    }
-  },
+  static defaultProps = {
+    value: 50,
+    level: 100,
+    min: 0,
+    max: 100,
+    amplify: 1,
+    onDim() {}
+  };
 
-  handleDrag(ev) {
+  handleDrag = ev => {
     const width = ReactDOM.findDOMNode(this).offsetWidth
     const {value, min, max, amplify, onDim} = this.props
 
@@ -41,7 +39,7 @@ export default React.createClass({
     onDim({
       dimlevel: clamp(min, max, value + val)
     })
-  },
+  };
 
   render() {
     const {children, className, style} = this.props
@@ -49,9 +47,10 @@ export default React.createClass({
       <Draggable
         style={style}
         className={className}
-        onDrag={this.handleDrag}>
+        onDrag={this.handleDrag}
+      >
         {children}
       </Draggable>
     )
   }
-})
+}

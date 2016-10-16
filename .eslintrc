@@ -5,7 +5,8 @@
   },
   "parser": "babel-eslint",
   "plugins": [
-    "eslint-plugin-import"
+    "eslint-plugin-import",
+    "eslint-plugin-react"
   ],
   "ecmaFeatures": {
     "jsx": true
@@ -14,8 +15,5 @@
     "bengler",
     "bengler/react",
     "bengler/import"
-  ],
-  "rules": {
-    "prefer-template": 1 // todo: remove this eventually
-  }
+  ]
 }

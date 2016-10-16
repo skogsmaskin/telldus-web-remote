@@ -1,15 +1,16 @@
-import React, {PropTypes} from'react'
+import React, {PropTypes} from 'react'
 import DOMContentLoadedFix from 'react-domcontentloaded'
 
-export default React.createClass({
-  displayName: 'Layout',
+export default class extends React.PureComponent {
+  static displayName = 'Layout';
 
-  propTypes: {
+  static propTypes = {
     title: PropTypes.string,
     serverRenderedProps: PropTypes.object,
     serverRenderedMarkup: PropTypes.string
-  },
-  getDOMContentLoadedHack() {
+  };
+
+  getDOMContentLoadedHack = () => {
     // http://webreflection.blogspot.no/2014/02/the-underestimated-problem-about-script.html
     return {
       __html: (
@@ -19,34 +20,37 @@ export default React.createClass({
         + 'var k=a[b];k.call(a,d,h)})(this.setImmediate||setTimeout,document,"addEventListener","DOMContentLoaded");'
       )
     }
-  },
-  getServerRenderedMarkup() {
+  };
+
+  getServerRenderedMarkup = () => {
     return {
       __html: this.props.serverRenderedMarkup
     }
-  },
-  getServerRenderedProps() {
+  };
+
+  getServerRenderedProps = () => {
     return {
       __html: `window.__SERVER_RENDERED_PROPS__ = ${JSON.stringify(this.props.serverRenderedProps || {})}`
     }
-  },
+  };
+
   render() {
     const {title} = this.props
     return (
       <html>
         <head>
           <DOMContentLoadedFix />
-          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8"/>
+          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <title>{title}</title>
-          <script src="/browser.js" async/>
-          <link rel="stylesheet" href="/stylesheets/main.css"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+          <script src="/browser.js" async />
+          <link rel="stylesheet" href="/stylesheets/main.css" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         </head>
         <body>
-        <div id="root" dangerouslySetInnerHTML={this.getServerRenderedMarkup()}/>
-        <script dangerouslySetInnerHTML={this.getServerRenderedProps()}/>
+          <div id="root" dangerouslySetInnerHTML={this.getServerRenderedMarkup()} />
+          <script dangerouslySetInnerHTML={this.getServerRenderedProps()} />
         </body>
       </html>
     )
   }
-})
+}

@@ -19,7 +19,8 @@ export default {
 
     sass.render(opts, (err, result) => {
       if (err) {
-        return callback(err)
+        callback(err)
+        return
       }
       callback(null, `${result.css}${
         result.map ? `\n/*# sourceMappingURL=data:application/json;base64,${toBase64(result.map)}*/` : ''

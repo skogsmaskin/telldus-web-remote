@@ -8,13 +8,15 @@ function colorFor(index) {
   return COLORS[index % COLORS.length]
 }
 
-export default React.createClass({
-  displayName: 'DeviceList',
-  propTypes: {
+export default class extends React.PureComponent {
+  static displayName = 'DeviceList';
+
+  static propTypes = {
     items: PropTypes.arrayOf(CustomPropTypes.device),
     itemClassName: PropTypes.string,
     renderItem: PropTypes.func
-  },
+  };
+
   render() {
     const {itemClassName, items, renderItem} = this.props
     return (
@@ -30,4 +32,4 @@ export default React.createClass({
       </ul>
     )
   }
-})
+}

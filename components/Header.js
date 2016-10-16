@@ -1,11 +1,11 @@
-import React, {PropTypes} from'react'
+import React, {PropTypes} from 'react'
 
-export default React.createClass({
-  displayName: 'Header',
+export default class extends React.PureComponent {
+  static displayName = 'Header';
 
-  propTypes: {
+  static propTypes = {
     children: PropTypes.node
-  },
+  };
 
   render() {
     const {children} = this.props
@@ -15,4 +15,4 @@ export default React.createClass({
       </div>
     )
   }
-})
+}

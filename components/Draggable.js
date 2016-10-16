@@ -2,65 +2,66 @@ import React, {PropTypes} from 'react'
 
 import on from '../lib/util/dom-on'
 
-export default React.createClass({
-  displayName: 'Draggable',
-  propTypes: {
+export default class extends React.PureComponent {
+  static displayName = 'Draggable';
+
+  static propTypes = {
     onDrag: PropTypes.func,
     children: PropTypes.node,
     className: PropTypes.string,
     threshold: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
     style: PropTypes.object
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      threshold: {x: 10, y: Infinity}
-    }
-  },
+  static defaultProps = {
+    threshold: {x: 10, y: Infinity}
+  };
 
   componentWillUnmount() {
     this.removeWindowMouseListeners()
-  },
+  }
 
-  handleTouchStart(event) {
+  handleTouchStart = event => {
     const touch = event.touches[0]
     this.start({x: touch.clientX, y: touch.clientY})
-  },
+  };
 
-  handleMouseDown(event) {
+  handleMouseDown = event => {
     if (event.button !== 0) {
       // Ignore all but left clicks
       return
     }
     this.start({x: event.clientX, y: event.clientY})
-  },
+  };
 
-  handleWindowTouchEnd(event) {
+  handleWindowTouchEnd = event => {
     this.end()
-  },
+  };
 
-  handleWindowMouseUp(event) {
+  handleWindowMouseUp = event => {
     this.end()
-  },
+  };
 
-  handleWindowTouchMove(event) {
+  handleWindowTouchMove = event => {
     const touch = event.touches[0]
     this.move({x: touch.clientX, y: touch.clientY})
-  },
+  };
 
-  handleWindowMouseMove(event) {
+  handleWindowMouseMove = event => {
     this.move({x: event.clientX, y: event.clientY})
-  },
+  };
 
-  start({x, y}) {
+  start = ({x, y}) => {
     this._startPosition = this._prevPosition = {x, y}
     this.addWindowMouseListeners()
-  },
-  end() {
+  };
+
+  end = () => {
     this._isDragging = false
     this.removeWindowMouseListeners()
-  },
-  move({x, y}) {
+  };
+
+  move = ({x, y}) => {
 
     const {threshold} = this.props
 
@@ -72,6 +73,7 @@ export default React.createClass({
     }
 
     if (!this._isDragging) {
+      // eslint-disable-next-line no-console
       console.log('Error: (mouse|touch)move listener on window is active even when not dragging')
     }
 
@@ -80,13 +82,13 @@ export default React.createClass({
       y: y - this._prevPosition.y
     })
     this._prevPosition = {x, y}
-  },
+  };
 
-  removeWindowMouseListeners() {
+  removeWindowMouseListeners = () => {
     this.removeListeners.forEach(fn => fn())
-  },
+  };
 
-  addWindowMouseListeners() {
+  addWindowMouseListeners = () => {
     this.removeListeners = [
       ['touchend', this.handleWindowTouchEnd],
       ['mouseup', this.handleWindowMouseUp],
@@ -94,7 +96,7 @@ export default React.createClass({
       ['mousemove', this.handleWindowMouseMove]
     ]
       .map(([event, handler]) => on(window, event, handler))
-  },
+  };
 
   render() {
     const {children, className, style} = this.props
@@ -103,9 +105,10 @@ export default React.createClass({
         style={style}
         className={['draggable', className].filter(Boolean).join(' ')}
         onMouseDown={this.handleMouseDown}
-        onTouchStart={this.handleTouchStart}>
+        onTouchStart={this.handleTouchStart}
+      >
         {children}
       </div>
     )
   }
-})
+}

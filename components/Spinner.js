@@ -1,20 +1,17 @@
 // Inspired by https://github.com/chenglou/react-spinner
 import React, {PropTypes} from 'react'
+import {range} from 'lodash'
 
-function range(num) {
-  return new Array(num).fill(0)
-}
-
-export default React.createClass({
-  propTypes: {
+export default class Spinner extends React.PureComponent {
+  static propTypes = {
     className: PropTypes.string,
     style: PropTypes.object
-  },
-  getDefaultProps() {
-    return {
-      className: ''
-    }
-  },
+  };
+
+  static defaultProps = {
+    className: ''
+  };
+
   render() {
     const {className, style} = this.props
 
@@ -27,7 +24,7 @@ export default React.createClass({
         WebkitAnimationDelay: animationDelay,
         WebkitTransform: transform
       }
-      return <div style={barStyle} className="react-spinner_bar" key={i}/>
+      return <div style={barStyle} className="react-spinner_bar" key={i} />
     })
 
     return (
@@ -36,4 +33,4 @@ export default React.createClass({
       </div>
     )
   }
-})
+}

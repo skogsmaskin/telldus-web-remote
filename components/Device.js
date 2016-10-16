@@ -23,14 +23,14 @@ function toggledDevicePower(device) {
   }
 }
 
-export default React.createClass({
-  displayName: 'DimmableDevice',
-  propTypes: {
+export default class DimmableDevice extends React.PureComponent {
+
+  static propTypes = {
     device: CustomPropTypes.device,
     onCommand: PropTypes.func
-  },
+  };
 
-  handleDim(ev) {
+  handleDim = ev => {
     const {device, onCommand} = this.props
     const deviceState = getDeviceState(device)
 
@@ -38,14 +38,16 @@ export default React.createClass({
       name: 'dim',
       dimlevel: deviceState.on ? ev.dimlevel : 0
     })
-  },
-  handleToggle() {
+  };
+
+  handleToggle = () => {
     const {device, onCommand} = this.props
     if (isSwitch(device)) {
       onCommand(device.id, toggledDevicePower(device))
     }
-  },
-  renderDeviceState(device) {
+  };
+
+  renderDeviceState = device => {
     const deviceState = getDeviceState(device)
     if (isDimmable(device)) {
       return deviceState.on ? `${Math.round(deviceState.hasOwnProperty('dimlevel') ? deviceState.dimlevel : 100)}%` : 'OFF'
@@ -54,9 +56,9 @@ export default React.createClass({
       return deviceState.on ? 'ON' : 'OFF'
     }
     return null
-  },
+  };
 
-  renderDeviceInfo(device) {
+  renderDeviceInfo = device => {
     const inSync = !device._pendingState
     return (
       <div className="deviceContainer">
@@ -71,9 +73,9 @@ export default React.createClass({
         </div>
       </div>
     )
-  },
+  };
 
-  renderDimmer() {
+  renderDimmer = () => {
     const {device} = this.props
     const deviceState = getDeviceState(device) || {}
 
@@ -93,7 +95,7 @@ export default React.createClass({
         {this.renderDeviceInfo(device)}
       </Dimmer>
     )
-  },
+  };
 
   render() {
     const {device} = this.props
@@ -104,4 +106,4 @@ export default React.createClass({
       </div>
     )
   }
-})
+}
