@@ -77,5 +77,14 @@
     "quickreload": "^2.0.0",
     "redux-logger": "^2.6.1",
     "remon": "^1.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjoerge/telldus-web-remote.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/bjoerge/telldus-web-remote/issues"
+  },
+  "homepage": "https://github.com/bjoerge/telldus-web-remote#readme"
 }
