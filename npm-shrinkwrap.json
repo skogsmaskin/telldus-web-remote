@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "dependencies": {
     "@bjoerge/telldus-ws": {
-      "version": "1.0.0",
-      "from": "@bjoerge/telldus-ws@>=1.0.0 <1.1.0",
-      "resolved": "https://registry.npmjs.org/@bjoerge/telldus-ws/-/telldus-ws-1.0.0.tgz",
+      "version": "1.0.1",
+      "from": "@bjoerge/telldus-ws@latest",
+      "resolved": "https://registry.npmjs.org/@bjoerge/telldus-ws/-/telldus-ws-1.0.1.tgz",
       "dependencies": {
         "frameguard": {
           "version": "1.1.0",
@@ -3936,8 +3936,8 @@
     },
     "telldus": {
       "version": "0.0.9",
-      "from": "bjoerge/telldus",
-      "resolved": "git+https://github.com/bjoerge/telldus.git#44c7165fc046e23d5fc92ab62e7822da61c9bf20"
+      "from": "git+ssh://git@github.com/bjoerge/telldus.git",
+      "resolved": "git+ssh://git@github.com/bjoerge/telldus.git#44c7165fc046e23d5fc92ab62e7822da61c9bf20"
     },
     "text-table": {
       "version": "0.2.0",

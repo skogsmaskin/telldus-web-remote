@@ -16,7 +16,7 @@
     "telldus-web-remote": "./bin/telldus-web-remote.js"
   },
   "dependencies": {
-    "@bjoerge/telldus-ws": "^1.0.0",
+    "@bjoerge/telldus-ws": "^1.0.1",
     "babel-plugin-lodash": "^3.2.9",
     "babel-plugin-syntax-class-properties": "^6.13.0",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
