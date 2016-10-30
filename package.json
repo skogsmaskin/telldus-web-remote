@@ -10,7 +10,7 @@
     "lint": "eslint . --ext=.js,.jsx",
     "bloat": "staticr --require ./.init.js --stdout --route /browser.js static-routes/browserify-bundles.js | discify --open",
     "start": "remon --require ./.init.js ./bin/dev-server.js",
-    "start-prod": "export NODE_ENV=production && npm run compile-static && node -r ./.init.js bin/cluster.js"
+    "compile-static-prod": "NODE_ENV=production npm run compile-static"
   },
   "bin": {
     "telldus-web-remote": "./bin/telldus-web-remote.js"
