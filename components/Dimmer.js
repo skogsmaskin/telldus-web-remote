@@ -1,3 +1,4 @@
+import {omit} from 'lodash'
 import React from 'react'
 import Draggable from './Draggable'
 import ReactDOM from 'react-dom'
@@ -40,7 +41,14 @@ export default class Dimmer extends React.PureComponent {
   };
 
   render() {
-    const {children, className, style, ...rest} = this.props
+    const {children, className, style, ...rest} = omit(this.props, [
+      'amplify',
+      'level',
+      'min',
+      'max',
+      'onDim',
+      'onSwitch'
+    ])
     return (
       <Draggable
         style={style}

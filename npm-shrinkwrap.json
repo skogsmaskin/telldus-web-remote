@@ -1430,9 +1430,9 @@
       }
     },
     "dom-event": {
-      "version": "2.0.0",
-      "from": "dom-event@2.0.0",
-      "resolved": "https://registry.npmjs.org/dom-event/-/dom-event-2.0.0.tgz"
+      "version": "1.0.0",
+      "from": "dom-event@>=1.0.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/dom-event/-/dom-event-1.0.0.tgz"
     },
     "dom-serializer": {
       "version": "0.1.0",
@@ -1839,11 +1839,6 @@
       "from": "fast-levenshtein@>=2.0.4 <2.1.0",
       "resolved": "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.5.tgz",
       "dev": true
-    },
-    "fastclick": {
-      "version": "1.0.6",
-      "from": "fastclick@>=1.0.6 <2.0.0",
-      "resolved": "https://registry.npmjs.org/fastclick/-/fastclick-1.0.6.tgz"
     },
     "fbjs": {
       "version": "0.8.5",

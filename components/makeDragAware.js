@@ -11,11 +11,20 @@ function getComponentName(component) {
   }
   return component.name || component.displayName || '<anonymous>'
 }
+
+function readThreshold(value) {
+  if (typeof value === 'number') {
+    return {x: value, y: value}
+  }
+  return value
+}
+
 // Returns a component that emits `onDragStart, `onDrag` and `onDragEnd` events.
 // It handles mouse/touch events the same way
 // - `onDragStart` is called with the {x, y} positions relative from the dom node (e.g. where the mousedown event happened)
 // - `onDrag` and `onDragEnd` are both called with the {x, y} difference from the previous position
-export default function makeDragAware(Component, {threshold = 2} = {}) {
+export default function makeDragAware(Component, options = {}) {
+  const threshold = readThreshold(options.threshold || 0)
 
   return class DragAware extends React.PureComponent {
     static displayName = `${getComponentName(Component)}$DragAware`
@@ -23,16 +32,19 @@ export default function makeDragAware(Component, {threshold = 2} = {}) {
       onDragStart: PropTypes.func,
       onDrag: PropTypes.func,
       onDragEnd: PropTypes.func,
-      onClick: PropTypes.func,
-    }
+      onClick: PropTypes.func
+    };
+
     static defaultProps = {
       onDragStart() {},
       onDragEnd() {},
       onDrag() {},
-      onClick() {},
-    }
+      onClick() {}
+    };
+
     componentDidMount() {
       const {onDragStart, onDrag, onDragEnd} = this.props
+
       debug('Draggable component did mount')
       const win = getWindow()
       const supportsTouch = ('ontouchstart' in window)
@@ -50,7 +62,7 @@ export default function makeDragAware(Component, {threshold = 2} = {}) {
       let moveListener
       let endListener
 
-      const startListener = listen(domNode, EVENT_NAMES.start, handleMouseDown)
+      const startListener = listen(domNode, EVENT_NAMES.start, handleMouseDown, {passive: true})
 
       this.getDisposables = () => {
         return [
@@ -73,17 +85,16 @@ export default function makeDragAware(Component, {threshold = 2} = {}) {
         }
 
         currentPos = getPos(event)
-        moveListener = listen(win, EVENT_NAMES.move, handleMouseMove)
-        endListener = listen(win, EVENT_NAMES.end, handleMouseUp)
+        moveListener = listen(win, EVENT_NAMES.move, handleMouseMove, {passive: true})
+        endListener = listen(win, EVENT_NAMES.end, handleMouseUp, {passive: true})
       }
 
       function handleMouseMove(event) {
-        event.preventDefault()
 
         const nextPos = getPos(event)
         const diff = diffPos(nextPos, currentPos)
         if (!dragging) {
-          if (Math.abs(diff.x) < threshold && Math.abs(diff.y) < threshold) {
+          if (Math.abs(diff.x) < threshold.x && Math.abs(diff.y) < threshold.y) {
             return
           }
           dragging = true
@@ -97,7 +108,6 @@ export default function makeDragAware(Component, {threshold = 2} = {}) {
       }
 
       function handleMouseUp(event) {
-        event.preventDefault()
         const nextPos = getPos(event)
         onDragEnd(getPositionRelativeToRect(nextPos.x, nextPos.y, domNode.getBoundingClientRect()))
         dragging = false
@@ -175,8 +185,8 @@ function diffPos(pos, otherPos) {
   }
 }
 
-function listen(element, type, handler) {
-  on(element, type, handler)
+function listen(element, type, handler, capture) {
+  on(element, type, handler, capture)
   return {
     dispose() {
       off(element, type, handler)
